@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 #include "../utils/GLIncludes.h"
 #include "IRenderable.h"
 
@@ -13,7 +13,7 @@ struct Vertex
 class Renderable2D: public IRenderable
 {
 public:
-	Renderable2D();
+	Renderable2D(Material *material);
 
 	void Prepare();
 	void Draw();

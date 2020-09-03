@@ -63,4 +63,6 @@ public:
 	void SetUniform(const char *name, float val);
 	void SetUniform(const char *name, int val);
 	void SetUniform(const char *name, bool val);
+
+	static Shader *CreateFromFiles(const char *vertex_shader, const char *fragment_shader);
 };

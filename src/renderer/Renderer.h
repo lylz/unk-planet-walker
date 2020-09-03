@@ -15,6 +15,6 @@ public:
 	void Render(std::vector<IRenderable*> renderable_objects);
 
 private:
-	Shader *shader_;
+	Shader *default_shader_;
 };
 

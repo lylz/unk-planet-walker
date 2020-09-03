@@ -2,17 +2,17 @@
 
 Renderer::Renderer()
 {
-	shader_ = new Shader();
+	default_shader_ = new Shader();
 
-	shader_->CompileShader("src/renderer/shaders/default/default.vert");
-	shader_->CompileShader("src/renderer/shaders/default/default.frag");
-	shader_->Link();
-	shader_->Validate();
+	default_shader_->CompileShader("src/renderer/shaders/default/default.vert");
+	default_shader_->CompileShader("src/renderer/shaders/default/default.frag");
+	default_shader_->Link();
+	default_shader_->Validate();
 }
 
 Renderer::~Renderer()
 {
-	delete shader_;
+	delete default_shader_;
 }
 
 void Renderer::Prepare()
@@ -25,12 +25,21 @@ void Renderer::Prepare()
 
 void Renderer::Render(std::vector<IRenderable*> renderable_objects)
 {
-	assert(shader_ != nullptr);
-
-	shader_->Use();
+	assert(default_shader_ != nullptr);
 
 	for (IRenderable *renderable_object : renderable_objects)
 	{
+		Material *material = renderable_object->material();
+
+		if (material != nullptr)
+		{
+			material->Bind();
+		}
+		else
+		{
+			default_shader_->Use();
+		}
+
 		renderable_object->Prepare();
 		renderable_object->Draw();
 	}

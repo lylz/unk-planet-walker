@@ -348,3 +348,16 @@ void Shader::ThrowShaderProgramError(std::string message)
 
 	throw ShaderException(message + log_string);
 }
+
+Shader* Shader::CreateFromFiles(const char *vertex_shader, const char *fragment_shader)
+{
+	Shader *shader = new Shader();
+
+	shader->CompileShader(vertex_shader);
+	shader->CompileShader(fragment_shader);
+	shader->Link();
+	shader->Validate();
+	shader->Use();
+
+	return shader;
+}

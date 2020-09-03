@@ -12,7 +12,8 @@ std::vector<Vertex> CreateQuad()
 	return { v1, v2, v3, v4 };
 }
 
-Renderable2D::Renderable2D()
+Renderable2D::Renderable2D(Material *material)
+	: IRenderable(material)
 {
 	vertices_ = CreateQuad();
 	indices_ = { 0, 1, 2, 2, 3, 0 };
