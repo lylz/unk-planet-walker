@@ -1,16 +1,8 @@
 #include "Window.h"
 #include "InputManager.h"
 
-// TODO: check this
-bool Window::keys[1024];
-
 Window::Window(const char *title, int width, int height)
 {
-	for (int i = 0; i < 1024; i++)
-	{
-		keys[i] = false;
-	}
-
 	if (!glfwInit())
 	{
 		printf("ERROR: failed to initialize GLFW. \n");

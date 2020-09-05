@@ -11,8 +11,6 @@ public:
 	Window(const char *title, int width, int height);
 	~Window();
 
-	static bool keys[1024];
-
 private:
 	GLFWwindow *window_;
 
