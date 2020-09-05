@@ -143,8 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\renderer\materials\default\ColorMaterial.cpp" />
-    <ClCompile Include="src\renderer\Camera.cpp" />
+    <ClCompile Include="src\renderer\materials\default\DynamicObjectMaterial.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\renderer\shaders\Shader.cpp" />
     <ClCompile Include="src\renderer\Renderable2D.cpp" />
@@ -152,7 +151,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\renderer\materials\default\ColorMaterial.h" />
+    <ClInclude Include="src\renderer\materials\default\DynamicObjectMaterial.h" />
     <ClInclude Include="src\renderer\materials\Material.h" />
     <ClInclude Include="src\renderer\Camera.h" />
     <ClInclude Include="src\renderer\shaders\Shader.h" />

@@ -30,10 +30,7 @@
     <ClCompile Include="src\renderer\shaders\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\renderer\materials\default\ColorMaterial.cpp">
+    <ClCompile Include="src\renderer\materials\default\DynamicObjectMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +62,10 @@
     <ClInclude Include="src\renderer\materials\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\materials\default\ColorMaterial.h">
+    <ClInclude Include="src\utils\Randomizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\Randomizer.h">
+    <ClInclude Include="src\renderer\materials\default\DynamicObjectMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

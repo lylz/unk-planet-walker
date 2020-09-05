@@ -28,7 +28,7 @@ private:
 	Camera()
 	{
 		position = glm::vec3(0.0f, 0.0f, 30.0f);
-		projection_matrix_ = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f); // TODO: get aspect ration from the window
+		projection_matrix_ = glm::perspective(glm::radians(45.0f), 1024.0f / 720.0f, 0.1f, 1000.0f); // TODO: get aspect ration from the window
 	};
 
 	glm::mat4 projection_matrix_;

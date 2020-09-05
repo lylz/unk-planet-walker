@@ -1,0 +1,53 @@
+#include "DynamicObjectMaterial.h"
+
+DynamicObjectMaterial::DynamicObjectMaterial(Shader *shader)
+	: Material(shader)
+{
+	model_matrix_ = glm::mat4(1.0f);
+	view_matrix_ = glm::mat4(1.0f);
+	projection_matrix_ = glm::mat4(1.0f);
+}
+
+void DynamicObjectMaterial::Bind()
+{
+	shader_->Use();
+
+	shader_->SetUniform("model", model_matrix_);
+	shader_->SetUniform("view", view_matrix_);
+	shader_->SetUniform("proj", projection_matrix_);
+}
+
+void DynamicObjectMaterial::Unbind()
+{
+	// TODO: unbind shader via glUseProgram(0)
+}
+
+glm::mat4 DynamicObjectMaterial::model_matrix()
+{
+	return model_matrix_;
+}
+
+glm::mat4 DynamicObjectMaterial::view_matrix()
+{
+	return view_matrix_;
+}
+
+glm::mat4 DynamicObjectMaterial::projection_matrix()
+{
+	return projection_matrix_;
+}
+
+void DynamicObjectMaterial::SetModelMatrix(glm::mat4 model_matrix)
+{
+	model_matrix_ = model_matrix;
+}
+
+void DynamicObjectMaterial::SetViewMatrix(glm::mat4 view_matrix)
+{
+	view_matrix_ = view_matrix;
+}
+
+void DynamicObjectMaterial::SetProjectionMatrix(glm::mat4 projection_matrix)
+{
+	projection_matrix_ = projection_matrix;
+}

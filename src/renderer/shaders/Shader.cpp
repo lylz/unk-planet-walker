@@ -357,7 +357,6 @@ Shader* Shader::CreateFromFiles(const char *vertex_shader, const char *fragment_
 	shader->CompileShader(fragment_shader);
 	shader->Link();
 	shader->Validate();
-	shader->Use();
 
 	return shader;
 }
