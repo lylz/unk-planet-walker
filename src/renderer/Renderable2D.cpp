@@ -4,17 +4,47 @@ std::vector<Vertex> CreateQuad()
 {
 	Vertex v1, v2, v3, v4;
 
-	v1.position = { -0.25f, 0.25f, 0.0f };
+	v1.position = { -0.25f, -0.25f, 0.0f };
 	v1.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v1.uv = { 0, 0 };
 
-	v2.position = { -0.25f, -0.25f, 0.0f };
+	v2.position = { -0.25f, 0.25f, 0.0f };
 	v2.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v2.uv = { 0, 1 };
 
-	v3.position = { 0.25f, -0.25f, 0.0f };
+	v3.position = { 0.25f, 0.25f, 0.0f };
 	v3.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v3.uv = { 1, 1 };
 
-	v4.position = { 0.25f, 0.25f, 0.0f };
+	v4.position = { 0.25f, -0.25f, 0.0f };
 	v4.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v4.uv = { 1, 0 };
+
+	return { v1, v2, v3, v4 };
+}
+
+std::vector<Vertex> CreateShape(int width, int height, float scale)
+{
+	Vertex v1, v2, v3, v4;
+
+	float w = width * scale;
+	float h = height * scale;
+
+	v1.position = { -w, -h, 0.0f };
+	v1.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v1.uv = { 0, 1 };
+
+	v2.position = { -w, h, 0.0f };
+	v2.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v2.uv = { 0, 0 };
+
+	v3.position = { w, h, 0.0f };
+	v3.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v3.uv = { 1, 0 };
+
+	v4.position = { w, -h, 0.0f };
+	v4.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+	v4.uv = { 1, 1 };
 
 	return { v1, v2, v3, v4 };
 }
@@ -22,7 +52,17 @@ std::vector<Vertex> CreateQuad()
 Renderable2D::Renderable2D(Material *material)
 	: IRenderable(material)
 {
-	vertices_ = CreateQuad();
+	if (material_ != nullptr && material_->texture() != nullptr)
+	{
+		Texture *texture = material_->texture();
+
+		vertices_ = CreateShape(texture->width(), texture->height(), 1 / 8.0f);
+	}
+	else
+	{
+		vertices_ = CreateQuad();
+	}
+
 	indices_ = { 0, 1, 2, 2, 3, 0 };
 
 	CreateVAO();
@@ -47,6 +87,9 @@ void Renderable2D::CreateVBO()
 
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, color));
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, uv));
 }
 
 void Renderable2D::CreateIBO()

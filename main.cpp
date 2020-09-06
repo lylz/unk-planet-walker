@@ -15,27 +15,54 @@ public:
 	UnkPlanetWalkerApplication(std::string name, int width, int height)
 		: Application(name, width, height)
 	{
-		Camera::GetInstance().position.z = 5.0f;
 		position_ = glm::vec3(0);
-		speed_ = .05f;
+		speed_ = .5f;
 
 		dynamic_object_ = Shader::CreateFromFiles("src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
-		dynamic_object_material_ = new DynamicObjectMaterial(dynamic_object_);
+		Texture *dynamic_object_texture = new Texture("assets/Protagonist.png");
+		Texture *dynamic_object_texture1 = new Texture("assets/Rapid.png");
+		DynamicObjectMaterial *dynamic_object_material = new DynamicObjectMaterial(dynamic_object_, dynamic_object_texture);
+		DynamicObjectMaterial *dynamic_object_material1 = new DynamicObjectMaterial(dynamic_object_, dynamic_object_texture1);
+		Renderable2D *renderable = new Renderable2D(dynamic_object_material);
+		Renderable2D *renderable1 = new Renderable2D(dynamic_object_material1);
 
-		cube_ = new Renderable2D(dynamic_object_material_);
+		dynamic_object_textures_.push_back(dynamic_object_texture);
+		dynamic_object_textures_.push_back(dynamic_object_texture1);
+		dynamic_object_materials_.push_back(dynamic_object_material);
+		dynamic_object_materials_.push_back(dynamic_object_material1);
+		renderables_.push_back(renderable);
+		renderables_.push_back(renderable1);
 	};
 
 	~UnkPlanetWalkerApplication()
 	{
-		delete dynamic_object_material_;
+		for (auto material : dynamic_object_materials_)
+		{
+			delete material;
+		}
+
+		for (auto texture : dynamic_object_textures_)
+		{
+			delete texture;
+		}
+
+		for (auto renderable : renderables_)
+		{
+			delete renderable;
+		}
+
+		dynamic_object_materials_.clear();
+		dynamic_object_textures_.clear();
+		renderables_.clear();
 		delete dynamic_object_;
 	}
 
 private:
 	Shader *dynamic_object_;
-	DynamicObjectMaterial *dynamic_object_material_;
+	std::vector<Texture*> dynamic_object_textures_;
+	std::vector<DynamicObjectMaterial*> dynamic_object_materials_;
 	
-	Renderable2D *cube_;
+	std::vector<Renderable2D*> renderables_;
 	glm::vec3 position_;
 	float speed_;
 
@@ -62,15 +89,31 @@ protected:
 			position_.x += speed_;
 		}
 
-		dynamic_object_material_->SetModelMatrix(glm::translate(glm::mat4(1), position_));
-		dynamic_object_material_->SetViewMatrix(Camera::GetInstance().view_matrix());
-		dynamic_object_material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
+		for (size_t i = 0; i < renderables_.size(); i++)
+		{
+			auto material = dynamic_object_materials_[i];
+			
+			if (i == 0)
+			{
+				material->SetModelMatrix(glm::translate(glm::mat4(1), position_));
+			}
+
+			material->SetViewMatrix(Camera::GetInstance().view_matrix());
+			material->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
+		}
 	}
 
 	void OnRender(Renderer *renderer)
 	{
+		std::vector<IRenderable*> renderables;
+
+		for (auto renderable : renderables_)
+		{
+			renderables.push_back(renderable);
+		}
+
 		renderer->Prepare();
-		renderer->Render({ cube_ });
+		renderer->Render(renderables);
 	}
 };
 

@@ -1,7 +1,7 @@
 #include "DynamicObjectMaterial.h"
 
-DynamicObjectMaterial::DynamicObjectMaterial(Shader *shader)
-	: Material(shader)
+DynamicObjectMaterial::DynamicObjectMaterial(Shader *shader, Texture *texture)
+	: Material(shader, texture)
 {
 	model_matrix_ = glm::mat4(1.0f);
 	view_matrix_ = glm::mat4(1.0f);
@@ -15,10 +15,20 @@ void DynamicObjectMaterial::Bind()
 	shader_->SetUniform("u_Model", model_matrix_);
 	shader_->SetUniform("u_View", view_matrix_);
 	shader_->SetUniform("u_Proj", projection_matrix_);
+
+	if (texture_ != nullptr)
+	{
+		texture_->Bind();
+		shader_->SetUniform("u_Texture", (int) texture_->slot());
+	}
 }
 
 void DynamicObjectMaterial::Unbind()
 {
+	if (texture_ != nullptr)
+	{
+		texture_->Unbind();
+	}
 	// TODO: unbind shader via glUseProgram(0)
 }
 

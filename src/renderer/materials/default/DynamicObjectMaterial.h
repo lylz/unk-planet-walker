@@ -6,7 +6,7 @@
 class DynamicObjectMaterial: public Material
 {
 public:
-	DynamicObjectMaterial(Shader *shader);
+	DynamicObjectMaterial(Shader *shader, Texture *texture);
 
 	void Bind();
 	void Unbind();

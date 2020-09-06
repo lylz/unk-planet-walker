@@ -150,6 +150,7 @@
     <ClCompile Include="src\renderer\Renderable2D.cpp" />
     <ClCompile Include="src\renderer\Renderer.cpp" />
     <ClCompile Include="src\application\Window.cpp" />
+    <ClCompile Include="src\renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="src\utils\GLIncludes.h" />
     <ClInclude Include="src\utils\Randomizer.h" />
     <ClInclude Include="src\application\Window.h" />
+    <ClInclude Include="src\renderer\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
