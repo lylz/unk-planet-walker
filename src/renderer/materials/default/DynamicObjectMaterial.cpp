@@ -12,9 +12,9 @@ void DynamicObjectMaterial::Bind()
 {
 	shader_->Use();
 
-	shader_->SetUniform("model", model_matrix_);
-	shader_->SetUniform("view", view_matrix_);
-	shader_->SetUniform("proj", projection_matrix_);
+	shader_->SetUniform("u_Model", model_matrix_);
+	shader_->SetUniform("u_View", view_matrix_);
+	shader_->SetUniform("u_Proj", projection_matrix_);
 }
 
 void DynamicObjectMaterial::Unbind()

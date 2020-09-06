@@ -5,9 +5,16 @@ std::vector<Vertex> CreateQuad()
 	Vertex v1, v2, v3, v4;
 
 	v1.position = { -0.25f, 0.25f, 0.0f };
+	v1.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+
 	v2.position = { -0.25f, -0.25f, 0.0f };
+	v2.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+
 	v3.position = { 0.25f, -0.25f, 0.0f };
+	v3.color = { 0.4f, 0.5f, 0.6f, 1.0f };
+
 	v4.position = { 0.25f, 0.25f, 0.0f };
+	v4.color = { 0.4f, 0.5f, 0.6f, 1.0f };
 
 	return { v1, v2, v3, v4 };
 }
@@ -36,7 +43,10 @@ void Renderable2D::CreateVBO()
 	glBufferData(GL_ARRAY_BUFFER, vertices_.size() * sizeof(Vertex), vertices_.data(), GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, position));
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, color));
 }
 
 void Renderable2D::CreateIBO()
