@@ -18,11 +18,11 @@ void Renderer::Prepare()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::Render(std::vector<IRenderable*> renderable_objects)
+void Renderer::Render(std::vector<Renderable2D*> renderable_objects)
 {
 	assert(default_shader_ != nullptr);
 
-	for (IRenderable *renderable_object : renderable_objects)
+	for (Renderable2D *renderable_object : renderable_objects)
 	{
 		Material *material = renderable_object->material();
 

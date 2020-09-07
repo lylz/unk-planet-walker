@@ -1,18 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <glm/glm.hpp>
 #include "../utils/GLIncludes.h"
-#include "IRenderable.h"
+#include "Renderable.h"
+#include "Vertex.h"
 
-struct Vertex
-{
-	glm::vec3 position;
-	glm::vec4 color;
-	glm::vec2 uv;
-};
-
-class Renderable2D: public IRenderable
+class Renderable2D: public Renderable
 {
 public:
 	Renderable2D(Material *material);
@@ -21,9 +14,6 @@ public:
 	void Draw();
 
 private:
-	std::vector<Vertex> vertices_;
-	std::vector<unsigned int> indices_;
-
 	GLuint vao_id_;
 	GLuint vbo_id_;
 	GLuint ibo_id_;

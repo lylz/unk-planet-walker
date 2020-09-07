@@ -14,10 +14,18 @@ Application::Application(std::string name, int width, int height)
 	}
 
 	renderer_ = new Renderer;
+
+	ui_shader_ = Shader::CreateFromFiles("src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
+	ui_material_ = new UIMaterial(ui_shader_);
+	ui_renderer_ = new BatchRenderer(ui_material_);
 }
 
 Application::~Application()
 {
+	delete ui_renderer_;
+	delete ui_material_;
+	delete ui_shader_;
+
 	delete window_;
 	delete renderer_;
 }
@@ -55,12 +63,14 @@ void Application::MainLoop()
 		if (time >= 1.0)
 		{
 			OnUpdate(time - 1.0);
+			OnUIUpdate(ui_renderer_);
 
 			updates++;
 			time--;
 		}
 
 		OnRender(renderer_);
+		OnUIRender(ui_renderer_);
 		frames++;
 
 		if (duration_cast<milliseconds>(system_clock::now().time_since_epoch()) - timer > (milliseconds)1000)

@@ -310,6 +310,12 @@ void Shader::SetUniform(const char *name, const glm::mat4 &m)
 	glUniformMatrix4fv(location, 1, GL_FALSE, &m[0][0]);
 }
 
+void Shader::SetUniform(const char *name, float *arr, unsigned int size)
+{
+	GLint location = this->GetUniformLocation(name);
+	glUniform1fv(location, size, arr);
+}
+
 void Shader::SetUniform(const char *name, float val)
 {
 	GLint location = this->GetUniformLocation(name);

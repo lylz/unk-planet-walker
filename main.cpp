@@ -5,7 +5,6 @@
 #include "src/application/Application.h"
 #include "src/application/InputManager.h"
 #include "src/renderer/Renderable2D.h"
-#include "src/renderer/Renderer.h"
 #include "src/renderer/materials/default/DynamicObjectMaterial.h"
 #include "src/renderer/Camera.h"
 
@@ -18,14 +17,15 @@ public:
 		position_ = glm::vec3(0);
 		speed_ = .5f;
 
-		dynamic_object_ = Shader::CreateFromFiles("src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
+		Shader *dynamic_object = Shader::CreateFromFiles("src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
 		Texture *dynamic_object_texture = new Texture("assets/Protagonist.png");
 		Texture *dynamic_object_texture1 = new Texture("assets/Rapid.png");
-		DynamicObjectMaterial *dynamic_object_material = new DynamicObjectMaterial(dynamic_object_, dynamic_object_texture);
-		DynamicObjectMaterial *dynamic_object_material1 = new DynamicObjectMaterial(dynamic_object_, dynamic_object_texture1);
+		DynamicObjectMaterial *dynamic_object_material = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture);
+		DynamicObjectMaterial *dynamic_object_material1 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture1);
 		Renderable2D *renderable = new Renderable2D(dynamic_object_material);
 		Renderable2D *renderable1 = new Renderable2D(dynamic_object_material1);
 
+		dynamic_object_shaders_.push_back(dynamic_object);
 		dynamic_object_textures_.push_back(dynamic_object_texture);
 		dynamic_object_textures_.push_back(dynamic_object_texture1);
 		dynamic_object_materials_.push_back(dynamic_object_material);
@@ -41,6 +41,11 @@ public:
 			delete material;
 		}
 
+		for (auto shader : dynamic_object_shaders_)
+		{
+			delete shader;
+		}
+
 		for (auto texture : dynamic_object_textures_)
 		{
 			delete texture;
@@ -52,13 +57,13 @@ public:
 		}
 
 		dynamic_object_materials_.clear();
+		dynamic_object_shaders_.clear();
 		dynamic_object_textures_.clear();
 		renderables_.clear();
-		delete dynamic_object_;
 	}
 
 private:
-	Shader *dynamic_object_;
+	std::vector<Shader*> dynamic_object_shaders_;
 	std::vector<Texture*> dynamic_object_textures_;
 	std::vector<DynamicObjectMaterial*> dynamic_object_materials_;
 	
@@ -105,15 +110,22 @@ protected:
 
 	void OnRender(Renderer *renderer)
 	{
-		std::vector<IRenderable*> renderables;
-
-		for (auto renderable : renderables_)
-		{
-			renderables.push_back(renderable);
-		}
-
 		renderer->Prepare();
-		renderer->Render(renderables);
+		renderer->Render(renderables_);
+	}
+
+	void OnUIUpdate(BatchRenderer *renderer)
+	{
+		renderer->Flush();
+		for (size_t i = 0; i < renderables_.size(); i++)
+		{
+			renderer->Submit(renderables_[i]);
+		}
+	}
+
+	void OnUIRender(BatchRenderer *renderer)
+	{
+		renderer->Render();
 	}
 };
 

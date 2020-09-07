@@ -50,7 +50,7 @@ std::vector<Vertex> CreateShape(int width, int height, float scale)
 }
 
 Renderable2D::Renderable2D(Material *material)
-	: IRenderable(material)
+	: Renderable({}, {}, material)
 {
 	if (material_ != nullptr && material_->texture() != nullptr)
 	{
