@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\RenderableFactory.cpp" />
     <ClCompile Include="src\renderer\materials\BatchMaterial.cpp" />
     <ClCompile Include="src\renderer\materials\default\UIMaterial.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="src\renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\RenderableFactory.h" />
     <ClInclude Include="src\renderer\materials\BatchMaterial.h" />
     <ClInclude Include="src\renderer\materials\default\UIMaterial.h" />
     <ClInclude Include="src\renderer\BatchRenderer.h" />
@@ -164,12 +166,16 @@
     <ClInclude Include="src\renderer\materials\default\DynamicObjectMaterial.h" />
     <ClInclude Include="src\renderer\materials\Material.h" />
     <ClInclude Include="src\renderer\Camera.h" />
+    <ClInclude Include="src\application\Layer.h" />
     <ClInclude Include="src\renderer\shaders\Shader.h" />
     <ClInclude Include="src\renderer\Renderable2D.h" />
     <ClInclude Include="src\renderer\Renderable.h" />
     <ClInclude Include="src\renderer\Renderer.h" />
     <ClInclude Include="src\application\InputManager.h" />
     <ClInclude Include="src\renderer\Vertex.h" />
+    <ClInclude Include="SceneLayer.h" />
+    <ClInclude Include="src\renderer\materials\default\TextureHolderMaterial.h" />
+    <ClInclude Include="UILayer.h" />
     <ClInclude Include="src\utils\GLIncludes.h" />
     <ClInclude Include="src\utils\Randomizer.h" />
     <ClInclude Include="src\application\Window.h" />

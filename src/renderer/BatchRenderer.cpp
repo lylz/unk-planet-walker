@@ -42,6 +42,7 @@ BatchRenderer::~BatchRenderer()
 void BatchRenderer::Submit(Renderable *renderable)
 {
 	auto renderable_vertices = renderable->vertices();
+	// TODO: allocate texture slots upfront, store them inside of vertices
 	vertices_.insert(vertices_.end(), renderable_vertices.begin(), renderable_vertices.end());
 
 	auto renderable_indices = renderable->indices();

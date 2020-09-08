@@ -12,5 +12,5 @@ public:
 	void FlushTextures();
 
 protected:
-	std::vector<Texture *> textures_;
+	std::vector<Texture*> textures_;
 };

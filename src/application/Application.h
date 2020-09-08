@@ -3,12 +3,11 @@
 #include <stdio.h>
 #include <string>
 #include <chrono>
+#include <vector>
 
 #include "../utils/GLIncludes.h"
 #include "Window.h"
-#include "../renderer/Renderer.h"
-#include "../renderer/BatchRenderer.h"
-#include "../renderer/materials/default/UIMaterial.h"
+#include "Layer.h"
 
 class Application
 {
@@ -17,24 +16,24 @@ public:
 	~Application();
 
 	void Run();
+	void AddLayer(Layer *layer);
+	void RemoveLayer(Layer *layer);
+
 private:
 	std::string name_;
 	int width_;
 	int height_;
 
 	Window *window_;
-	Renderer *renderer_;
-
-	Shader *ui_shader_;
-	UIMaterial *ui_material_;
-	BatchRenderer *ui_renderer_;
+	std::vector<Layer*> layers_;
 
 	void MainLoop();
 
 protected:
-	virtual void OnUpdate(long double dt) = 0;
-	virtual void OnRender(Renderer *renderer) = 0;
-	virtual void OnUIUpdate(BatchRenderer *renderer) = 0;
-	virtual void OnUIRender(BatchRenderer *renderer) = 0;
+	void Init();
+	void Update(long double dt);
+	void Render();
+
+	virtual void OnInit() = 0;
 };
 

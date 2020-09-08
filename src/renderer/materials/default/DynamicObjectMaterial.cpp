@@ -6,6 +6,7 @@ DynamicObjectMaterial::DynamicObjectMaterial(Shader *shader, Texture *texture)
 	model_matrix_ = glm::mat4(1.0f);
 	view_matrix_ = glm::mat4(1.0f);
 	projection_matrix_ = glm::mat4(1.0f);
+	texture_slot_ = 0;
 }
 
 void DynamicObjectMaterial::Bind()
@@ -18,8 +19,8 @@ void DynamicObjectMaterial::Bind()
 
 	if (texture_ != nullptr)
 	{
-		texture_->Bind();
-		shader_->SetUniform("u_Texture", (int) texture_->slot());
+		texture_->Bind(texture_slot_);
+		shader_->SetUniform("u_Texture", (int) texture_slot_);
 	}
 }
 
@@ -27,7 +28,7 @@ void DynamicObjectMaterial::Unbind()
 {
 	if (texture_ != nullptr)
 	{
-		texture_->Unbind();
+		texture_->Unbind(texture_slot_);
 	}
 	// TODO: unbind shader via glUseProgram(0)
 }

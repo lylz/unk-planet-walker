@@ -5,7 +5,6 @@
 #include <stdexcept>
 
 Texture::Texture(const char *file_path)
-	: slot_(0)
 {
 	stbi_uc *image_pixels = stbi_load(file_path, &width_, &height_, &channels_, STBI_rgb_alpha);
 
@@ -30,11 +29,6 @@ GLuint Texture::id()
 	return id_;
 }
 
-unsigned int Texture::slot()
-{
-	return slot_;
-}
-
 int Texture::width()
 {
 	return width_;
@@ -45,14 +39,14 @@ int Texture::height()
 	return height_;
 }
 
-void Texture::Bind()
+void Texture::Bind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot_);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, id_);
 }
 
-void Texture::Unbind()
+void Texture::Unbind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot_);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

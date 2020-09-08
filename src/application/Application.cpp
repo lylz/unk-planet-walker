@@ -12,27 +12,35 @@ Application::Application(std::string name, int width, int height)
 		printf("ERROR: unable to initialize glew. \n");
 		exit(EXIT_FAILURE);
 	}
-
-	renderer_ = new Renderer;
-
-	ui_shader_ = Shader::CreateFromFiles("src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
-	ui_material_ = new UIMaterial(ui_shader_);
-	ui_renderer_ = new BatchRenderer(ui_material_);
 }
 
 Application::~Application()
 {
-	delete ui_renderer_;
-	delete ui_material_;
-	delete ui_shader_;
-
 	delete window_;
-	delete renderer_;
 }
 
 void Application::Run()
 {
+	Init();
 	MainLoop();
+}
+
+void Application::AddLayer(Layer *layer)
+{
+	layers_.push_back(layer);
+	layer->Init();
+}
+
+void Application::RemoveLayer(Layer *layer)
+{
+	for (size_t i = 0; i < layers_.size(); i++)
+	{
+		if (layers_[i] == layer)
+		{
+			layers_.erase(layers_.begin() + i);
+			break;
+		}
+	}
 }
 
 void Application::MainLoop()
@@ -62,15 +70,13 @@ void Application::MainLoop()
 
 		if (time >= 1.0)
 		{
-			OnUpdate(time - 1.0);
-			OnUIUpdate(ui_renderer_);
+			Update(time - 1.0);
 
 			updates++;
 			time--;
 		}
 
-		OnRender(renderer_);
-		OnUIRender(ui_renderer_);
+		Render();
 		frames++;
 
 		if (duration_cast<milliseconds>(system_clock::now().time_since_epoch()) - timer > (milliseconds)1000)
@@ -85,6 +91,30 @@ void Application::MainLoop()
 
 			updates = 0;
 			frames = 0;
+		}
+	}
+}
+
+void Application::Init()
+{
+	OnInit();
+}
+
+void Application::Update(long double dt)
+{
+	for (size_t i = 0; i < layers_.size(); i++)
+	{
+		layers_[i]->OnUpdate();
+	}
+}
+
+void Application::Render()
+{
+	for (size_t i = 0; i < layers_.size(); i++)
+	{
+		if (layers_[i]->visible())
+		{
+			layers_[i]->OnRender();
 		}
 	}
 }

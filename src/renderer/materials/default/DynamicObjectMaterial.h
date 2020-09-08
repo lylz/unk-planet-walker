@@ -23,4 +23,6 @@ private:
 	glm::mat4 model_matrix_;
 	glm::mat4 view_matrix_;
 	glm::mat4 projection_matrix_;
+
+	unsigned int texture_slot_;
 };
