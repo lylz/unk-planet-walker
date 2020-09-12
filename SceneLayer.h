@@ -66,18 +66,24 @@ public:
 		Shader *dynamic_object = Shader::CreateFromFiles("src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
 		Texture *dynamic_object_texture = new Texture("assets/Protagonist.png");
 		Texture *dynamic_object_texture1 = new Texture("assets/Rapid.png");
+		Texture *dynamic_object_texture2 = new Texture("assets/Protagonist.png");
 		DynamicObjectMaterial *dynamic_object_material = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture);
 		DynamicObjectMaterial *dynamic_object_material1 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture1);
+		DynamicObjectMaterial *dynamic_object_material2 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture2);
 		Renderable2D *renderable = new Renderable2D(dynamic_object_material);
 		Renderable2D *renderable1 = new Renderable2D(dynamic_object_material1);
+		Renderable2D *renderable2 = new Renderable2D(dynamic_object_material2);
 
 		dynamic_object_shaders_.push_back(dynamic_object);
 		dynamic_object_textures_.push_back(dynamic_object_texture);
 		dynamic_object_textures_.push_back(dynamic_object_texture1);
+		dynamic_object_textures_.push_back(dynamic_object_texture2);
 		dynamic_object_materials_.push_back(dynamic_object_material);
 		dynamic_object_materials_.push_back(dynamic_object_material1);
+		dynamic_object_materials_.push_back(dynamic_object_material2);
 		renderables_.push_back(renderable);
 		renderables_.push_back(renderable1);
+		renderables_.push_back(renderable2);
 	};
 
 	void OnUpdate()

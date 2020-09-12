@@ -16,9 +16,8 @@ public:
 protected:
 	void OnInit()
 	{
-		// TODO: rendering is bugged now. fix it
-		AddLayer(new UILayer);
 		AddLayer(new SceneLayer);
+		AddLayer(new UILayer);
 	}
 };
 

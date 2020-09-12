@@ -12,6 +12,9 @@ BatchRenderer::BatchRenderer(BatchMaterial *global_material)
 
 	global_material_ = global_material;
 
+	glGenVertexArrays(1, &vertex_array_id_);
+	glBindVertexArray(vertex_array_id_);
+
 	glGenBuffers(1, &vertex_buffer_id_);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
 	glBufferData(GL_ARRAY_BUFFER, BATCH_RENDERER_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
@@ -67,7 +70,8 @@ void BatchRenderer::Render()
 
 	global_material_->Bind();
 
-	glBindVertexArray(vertex_buffer_id_);
+	glBindVertexArray(vertex_array_id_);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_.size(), vertices_.data());
 	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices_.size(), indices_.data());
 

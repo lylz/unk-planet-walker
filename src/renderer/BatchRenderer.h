@@ -15,6 +15,7 @@ public:
 	void Flush();
 
 private:
+	GLuint vertex_array_id_;
 	GLuint vertex_buffer_id_;
 	GLuint index_buffer_id_;
 
