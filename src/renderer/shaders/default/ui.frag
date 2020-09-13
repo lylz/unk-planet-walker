@@ -6,7 +6,7 @@ in float v_TextureId;
 
 out vec4 FragmentColor;
 
-uniform sampler2D u_Texture[32];
+layout (binding = 0) uniform sampler2D u_Texture[32];
 
 void main()
 {
