@@ -5,6 +5,7 @@
 #include "src/renderer/RenderableFactory.h"
 #include "src/renderer/materials/default/UIMaterial.h"
 #include "src/renderer/materials/default/TextureHolderMaterial.h"
+#include "src/renderer/Camera.h"
 #include "src/application/InputManager.h"
 
 class UILayer : public Layer
@@ -27,6 +28,15 @@ private:
 public:
 	~UILayer()
 	{
+		delete h_renderable_;
+		delete o_renderable_;
+		delete h_material_;
+		delete o_material_;
+		delete h_texture_;
+		delete o_texture_;
+
+		renderables_.clear();
+
 		delete renderer_;
 		delete material_;
 		delete shader_;
@@ -50,13 +60,13 @@ public:
 		h_renderable_ = RenderableFactory::CreateQuad(
 			h_texture_->width() * scale,
 			h_texture_->height() * scale,
-			{ -10, 0 },
+			{ -5, 0 },
 			h_material_
 		);
 		o_renderable_ = RenderableFactory::CreateQuad(
 			o_texture_->width() * scale,
 			o_texture_->height() * scale,
-			{ -10, 0 },
+			{ 5, 0 },
 			o_material_
 		);
 
@@ -70,6 +80,9 @@ public:
 		{
 			SetVisible(!visible_);
 		}
+
+		material_->SetViewMatrix(Camera::GetInstance().view_matrix());
+		material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
 	}
 
 	void OnRender()

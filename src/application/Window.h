@@ -16,6 +16,7 @@ private:
 
 public:
 	void Update();
+	void SwapBuffers();
 	bool ShouldClose();
 
 private:

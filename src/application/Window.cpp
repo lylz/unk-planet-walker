@@ -31,6 +31,10 @@ Window::Window(const char *title, int width, int height)
 void Window::Update()
 {
 	glfwPollEvents();
+}
+
+void Window::SwapBuffers()
+{
 	glfwSwapBuffers(window_);
 }
 

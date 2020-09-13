@@ -25,7 +25,7 @@ public:
 	{
 		renderer_ = nullptr;
 		visible_ = true;
-		position_ = glm::vec3(0);
+		position_ = glm::vec3(0, 0, 3);
 		speed_ = .5f;
 	};
 
@@ -83,7 +83,7 @@ public:
 		dynamic_object_materials_.push_back(dynamic_object_material2);
 		renderables_.push_back(renderable);
 		renderables_.push_back(renderable1);
-		renderables_.push_back(renderable2);
+		//renderables_.push_back(renderable2);
 	};
 
 	void OnUpdate()

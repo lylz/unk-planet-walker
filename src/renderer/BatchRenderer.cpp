@@ -46,7 +46,13 @@ void BatchRenderer::Submit(Renderable *renderable)
 {
 	auto renderable_vertices = renderable->vertices();
 	// TODO: allocate texture slots upfront, store them inside of vertices
-	vertices_.insert(vertices_.end(), renderable_vertices.begin(), renderable_vertices.end());
+	for (size_t i = 0; i < renderable_vertices.size(); i++)
+	{
+		Vertex v = renderable_vertices[i];
+		v.texture_id = index_offset_ / BATCH_RENDERER_VERTEX_COUNT;
+
+		vertices_.push_back(v);
+	}
 
 	auto renderable_indices = renderable->indices();
 
@@ -72,8 +78,8 @@ void BatchRenderer::Render()
 
 	glBindVertexArray(vertex_array_id_);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_.size(), vertices_.data());
-	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices_.size(), indices_.data());
+	glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_.size() * sizeof(Vertex), vertices_.data());
+	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices_.size() * sizeof(unsigned int), indices_.data());
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);

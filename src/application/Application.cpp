@@ -77,6 +77,7 @@ void Application::MainLoop()
 		}
 
 		Render();
+		window_->SwapBuffers();
 		frames++;
 
 		if (duration_cast<milliseconds>(system_clock::now().time_since_epoch()) - timer > (milliseconds)1000)
@@ -110,6 +111,9 @@ void Application::Update(long double dt)
 
 void Application::Render()
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+
 	for (size_t i = 0; i < layers_.size(); i++)
 	{
 		if (layers_[i]->visible())

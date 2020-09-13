@@ -16,8 +16,8 @@ public:
 protected:
 	void OnInit()
 	{
-		AddLayer(new SceneLayer);
 		AddLayer(new UILayer);
+		AddLayer(new SceneLayer);
 	}
 };
 

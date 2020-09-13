@@ -10,7 +10,13 @@ uniform sampler2D u_Texture[32];
 
 void main()
 {
-	// TODO: add v_TextureId null check
-	int textureId = int(v_TextureId - 0.5);
-	FragmentColor = texture(u_Texture[textureId], v_Uv);
+	vec4 color = vec4(0.5, 0.6, 0.7, 1.0);
+
+	if (v_TextureId >= 0)
+	{
+		int textureId = int(v_TextureId);
+		color = texture(u_Texture[textureId], v_Uv);
+	}
+
+	FragmentColor = color;
 }
