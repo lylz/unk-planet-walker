@@ -11,16 +11,15 @@ void UIMaterial::Bind()
 {
 	shader_->Use();
 
-	// currently order of textures is important
-	// TODO: limit the amount of texture_slots that can be used
 	std::vector<int> texture_slots;
 
 	for (size_t i = 0; i < textures_.size(); i++)
 	{
 		Texture *texture = textures_[i];
+		unsigned int texture_slot = textures_slots_map_.find(texture->id())->second;
 
-		texture->Bind(i);
-		texture_slots.push_back(i);
+		texture->Bind(texture_slot);
+		texture_slots.push_back(texture_slot);
 	}
 
 	shader_->SetUniform("u_Textures", texture_slots.data(), texture_slots.size());

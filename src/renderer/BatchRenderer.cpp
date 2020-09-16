@@ -11,6 +11,7 @@ BatchRenderer::BatchRenderer(BatchMaterial *global_material)
 	assert(global_material != nullptr);
 
 	global_material_ = global_material;
+	texture_slot_index_ = 0;
 
 	glGenVertexArrays(1, &vertex_array_id_);
 	glBindVertexArray(vertex_array_id_);
@@ -44,12 +45,34 @@ BatchRenderer::~BatchRenderer()
 
 void BatchRenderer::Submit(Renderable *renderable)
 {
+	if (renderable->material() != nullptr && renderable->material()->texture() != nullptr)
+	{
+		auto texture_slot = textures_slots_map_.find(renderable->material()->texture()->id());
+		unsigned int slot = texture_slot_index_;
+
+		if (texture_slot == textures_slots_map_.end())
+		{
+			textures_slots_map_.insert({ renderable->material()->texture()->id(), slot });
+			texture_slot_index_++;
+		}
+		else
+		{
+			slot = texture_slot->second;
+		}
+
+		global_material_->AddTexture(renderable->material()->texture(), slot);
+	}
+
 	auto renderable_vertices = renderable->vertices();
-	// TODO: allocate texture slots upfront, store them inside of vertices
+
 	for (size_t i = 0; i < renderable_vertices.size(); i++)
 	{
 		Vertex v = renderable_vertices[i];
-		v.texture_id = index_offset_ / BATCH_RENDERER_VERTEX_COUNT;
+
+		if (renderable->material() != nullptr && renderable->material()->texture() != nullptr)
+		{
+			v.texture_id = GetTextureSlot(renderable->material()->texture()->id());
+		}
 
 		vertices_.push_back(v);
 	}
@@ -62,11 +85,6 @@ void BatchRenderer::Submit(Renderable *renderable)
 	}
 
 	index_offset_ += BATCH_RENDERER_VERTEX_COUNT;
-
-	if (renderable->material() != nullptr && renderable->material()->texture() != nullptr)
-	{
-		global_material_->AddTexture(renderable->material()->texture());
-	}
 }
 
 void BatchRenderer::Render()
@@ -89,6 +107,21 @@ void BatchRenderer::Flush()
 {
 	vertices_.clear();
 	indices_.clear();
+	texture_slot_index_ = 0;
+	textures_slots_map_.clear();
 	global_material_->FlushTextures();
 	index_offset_ = 0;
+}
+
+int BatchRenderer::GetTextureSlot(GLuint texture_id)
+{
+	int result_slot = -1;
+	auto texture_slot = textures_slots_map_.find(texture_id);
+
+	if (texture_slot != textures_slots_map_.end())
+	{
+		result_slot = texture_slot->second;
+	}
+
+	return result_slot;
 }

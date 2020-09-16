@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include "../utils/GLIncludes.h"
 #include "Renderable.h"
 #include "./materials/BatchMaterial.h"
@@ -20,9 +21,13 @@ private:
 	GLuint index_buffer_id_;
 
 	BatchMaterial *global_material_;
+	unsigned int texture_slot_index_;
+	std::map<GLuint, unsigned int> textures_slots_map_;
 
 	std::vector<Vertex> vertices_;
 	std::vector<unsigned int> indices_;
 	unsigned int index_offset_ = 0;
+
+	int GetTextureSlot(GLuint texture_id);
 };
 
