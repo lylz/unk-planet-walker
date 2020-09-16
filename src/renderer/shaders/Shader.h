@@ -60,6 +60,7 @@ public:
 	void SetUniform(const char *name, const glm::vec4 &v);
 	void SetUniform(const char *name, const glm::mat4 &m);
 	void SetUniform(const char *name, const glm::mat3 &m);
+	void SetUniform(const char *name, int *arr, unsigned int size);
 	void SetUniform(const char *name, float val);
 	void SetUniform(const char *name, int val);
 	void SetUniform(const char *name, bool val);

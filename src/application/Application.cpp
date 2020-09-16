@@ -12,19 +12,35 @@ Application::Application(std::string name, int width, int height)
 		printf("ERROR: unable to initialize glew. \n");
 		exit(EXIT_FAILURE);
 	}
-
-	renderer_ = new Renderer;
 }
 
 Application::~Application()
 {
 	delete window_;
-	delete renderer_;
 }
 
 void Application::Run()
 {
+	Init();
 	MainLoop();
+}
+
+void Application::AddLayer(Layer *layer)
+{
+	layers_.push_back(layer);
+	layer->Init();
+}
+
+void Application::RemoveLayer(Layer *layer)
+{
+	for (size_t i = 0; i < layers_.size(); i++)
+	{
+		if (layers_[i] == layer)
+		{
+			layers_.erase(layers_.begin() + i);
+			break;
+		}
+	}
 }
 
 void Application::MainLoop()
@@ -54,13 +70,14 @@ void Application::MainLoop()
 
 		if (time >= 1.0)
 		{
-			OnUpdate(time - 1.0);
+			Update(time - 1.0);
 
 			updates++;
 			time--;
 		}
 
-		OnRender(renderer_);
+		Render();
+		window_->SwapBuffers();
 		frames++;
 
 		if (duration_cast<milliseconds>(system_clock::now().time_since_epoch()) - timer > (milliseconds)1000)
@@ -75,6 +92,33 @@ void Application::MainLoop()
 
 			updates = 0;
 			frames = 0;
+		}
+	}
+}
+
+void Application::Init()
+{
+	OnInit();
+}
+
+void Application::Update(long double dt)
+{
+	for (size_t i = 0; i < layers_.size(); i++)
+	{
+		layers_[i]->OnUpdate();
+	}
+}
+
+void Application::Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+
+	for (size_t i = 0; i < layers_.size(); i++)
+	{
+		if (layers_[i]->visible())
+		{
+			layers_[i]->OnRender();
 		}
 	}
 }

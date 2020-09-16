@@ -5,7 +5,6 @@
 #include <stdexcept>
 
 Texture::Texture(const char *file_path)
-	: slot_(0)
 {
 	stbi_uc *image_pixels = stbi_load(file_path, &width_, &height_, &channels_, STBI_rgb_alpha);
 
@@ -19,6 +18,8 @@ Texture::Texture(const char *file_path)
 	glBindTexture(GL_TEXTURE_2D, id_);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_pixels);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -28,11 +29,6 @@ Texture::Texture(const char *file_path)
 GLuint Texture::id()
 {
 	return id_;
-}
-
-unsigned int Texture::slot()
-{
-	return slot_;
 }
 
 int Texture::width()
@@ -45,14 +41,14 @@ int Texture::height()
 	return height_;
 }
 
-void Texture::Bind()
+void Texture::Bind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot_);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, id_);
 }
 
-void Texture::Unbind()
+void Texture::Unbind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot_);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
