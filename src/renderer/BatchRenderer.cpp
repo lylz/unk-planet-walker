@@ -43,7 +43,7 @@ BatchRenderer::~BatchRenderer()
 	glDeleteBuffers(1, &index_buffer_id_);
 }
 
-void BatchRenderer::Submit(Renderable *renderable)
+void BatchRenderer::Submit(Mesh *renderable)
 {
 	if (renderable->material() != nullptr && renderable->material()->texture() != nullptr)
 	{

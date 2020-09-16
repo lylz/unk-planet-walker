@@ -3,7 +3,7 @@
 #include <vector>
 #include "../utils/GLIncludes.h"
 #include "shaders/Shader.h"
-#include "Renderable2D.h"
+#include "Renderable.h"
 
 class Renderer
 {
@@ -11,10 +11,12 @@ public:
 	Renderer();
 	~Renderer();
 
+	void Submit(Mesh *mesh);
 	void Prepare();
-	void Render(std::vector<Renderable2D*> renderable_objects);
+	void Render();
 
 private:
 	Shader *default_shader_;
+	std::vector<Renderable*> renderables_;
 };
 

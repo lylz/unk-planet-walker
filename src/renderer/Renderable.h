@@ -1,24 +1,29 @@
 #pragma once
 
 #include <vector>
-#include "Vertex.h"
-#include "materials/Material.h"
+#include "../utils/GLIncludes.h"
+#include "Mesh.h"
 
 class Renderable
 {
 public:
-	Renderable(
-		std::vector<Vertex> vertices,
-		std::vector<unsigned int> indices,
-		Material *material
-	);
+	Renderable(Mesh *mesh);
 
-	Material *material();
-	std::vector<Vertex> vertices();
-	std::vector<unsigned int> indices();
+	void Prepare();
+	void Draw();
 
-protected:
-	std::vector<Vertex> vertices_;
-	std::vector<unsigned int> indices_;
-	Material *material_;
+	Mesh *mesh();
+
+private:
+	Mesh *mesh_;
+
+	GLuint vao_id_;
+	GLuint vbo_id_;
+	GLuint ibo_id_;
+
+private:
+	void CreateVAO();
+	void CreateVBO();
+	void CreateIBO();
 };
+

@@ -1,11 +1,11 @@
-#include "RenderableFactory.h"
+#include "MeshFactory.h"
 
-Renderable *RenderableFactory::CreateQuad(float width, float height, Material *material)
+Mesh *MeshFactory::CreateQuad(float width, float height, Material *material)
 {
 	return CreateQuad(width, height, { 0, 0 }, material);
 }
 
-Renderable *RenderableFactory::CreateQuad(float width, float height, glm::vec2 position, Material *material)
+Mesh *MeshFactory::CreateQuad(float width, float height, glm::vec2 position, Material *material)
 {
 	Vertex v1, v2, v3, v4;
 
@@ -32,5 +32,5 @@ Renderable *RenderableFactory::CreateQuad(float width, float height, glm::vec2 p
 
 	std::vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
 
-	return new Renderable({ v1, v2, v3, v4 }, indices, material);
+	return new Mesh({ v1, v2, v3, v4 }, indices, material);
 }

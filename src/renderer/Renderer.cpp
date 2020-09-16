@@ -7,7 +7,15 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
+	renderables_.clear();
+
 	delete default_shader_;
+}
+
+void Renderer::Submit(Mesh *mesh)
+{
+	Renderable *renderable = new Renderable(mesh);
+	renderables_.push_back(renderable);
 }
 
 void Renderer::Prepare()
@@ -17,13 +25,13 @@ void Renderer::Prepare()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::Render(std::vector<Renderable2D*> renderable_objects)
+void Renderer::Render()
 {
 	assert(default_shader_ != nullptr);
 
-	for (Renderable2D *renderable_object : renderable_objects)
+	for (Renderable *renderable_object : renderables_)
 	{
-		Material *material = renderable_object->material();
+		Material *material = renderable_object->mesh()->material();
 
 		if (material != nullptr)
 		{

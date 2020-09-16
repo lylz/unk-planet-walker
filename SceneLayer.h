@@ -2,7 +2,8 @@
 
 #include "src/application/Layer.h"
 #include "src/renderer/Renderer.h"
-#include "src/renderer/Renderable2D.h"
+#include "src/renderer/Mesh.h"
+#include "src/renderer/MeshFactory.h"
 #include "src/renderer/materials/default/DynamicObjectMaterial.h"
 #include "src/renderer/Camera.h"
 #include "src/application/InputManager.h"
@@ -12,11 +13,11 @@ class SceneLayer : public Layer
 private:
 	Renderer *renderer_;
 
-	std::vector<Shader *> dynamic_object_shaders_;
-	std::vector<Texture *> dynamic_object_textures_;
-	std::vector<DynamicObjectMaterial *> dynamic_object_materials_;
+	std::vector<Shader*> dynamic_object_shaders_;
+	std::vector<Texture*> dynamic_object_textures_;
+	std::vector<DynamicObjectMaterial*> dynamic_object_materials_;
 
-	std::vector<Renderable2D *> renderables_;
+	std::vector<Mesh*> meshes_;
 	glm::vec3 position_;
 	float speed_;
 
@@ -47,15 +48,15 @@ public:
 			delete texture;
 		}
 
-		for (auto renderable : renderables_)
+		for (auto mesh : meshes_)
 		{
-			delete renderable;
+			delete mesh;
 		}
 
 		dynamic_object_materials_.clear();
 		dynamic_object_shaders_.clear();
 		dynamic_object_textures_.clear();
-		renderables_.clear();
+		meshes_.clear();
 	}
 
 	void Init()
@@ -70,9 +71,24 @@ public:
 		DynamicObjectMaterial *dynamic_object_material = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture);
 		DynamicObjectMaterial *dynamic_object_material1 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture1);
 		DynamicObjectMaterial *dynamic_object_material2 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture2);
-		Renderable2D *renderable = new Renderable2D(dynamic_object_material);
-		Renderable2D *renderable1 = new Renderable2D(dynamic_object_material1);
-		Renderable2D *renderable2 = new Renderable2D(dynamic_object_material2);
+
+		float scale = .125f;
+
+		Mesh *mesh = MeshFactory::CreateQuad(
+			dynamic_object_texture->width() * scale,
+			dynamic_object_texture->height() * scale,
+			dynamic_object_material
+		);
+		Mesh *mesh1 = MeshFactory::CreateQuad(
+			dynamic_object_texture1->width() * scale,
+			dynamic_object_texture1->height() * scale,
+			dynamic_object_material1
+		);
+		Mesh *mesh2 = MeshFactory::CreateQuad(
+			dynamic_object_texture2->width() * scale,
+			dynamic_object_texture2->height() * scale,
+			dynamic_object_material2
+		);
 
 		dynamic_object_shaders_.push_back(dynamic_object);
 		dynamic_object_textures_.push_back(dynamic_object_texture);
@@ -81,9 +97,12 @@ public:
 		dynamic_object_materials_.push_back(dynamic_object_material);
 		dynamic_object_materials_.push_back(dynamic_object_material1);
 		dynamic_object_materials_.push_back(dynamic_object_material2);
-		renderables_.push_back(renderable);
-		renderables_.push_back(renderable1);
-		//renderables_.push_back(renderable2);
+		meshes_.push_back(mesh);
+		meshes_.push_back(mesh1);
+		meshes_.push_back(mesh2);
+		renderer_->Submit(mesh);
+		renderer_->Submit(mesh1);
+		renderer_->Submit(mesh2);
 	};
 
 	void OnUpdate()
@@ -108,7 +127,7 @@ public:
 			position_.x += speed_;
 		}
 
-		for (size_t i = 0; i < renderables_.size(); i++)
+		for (size_t i = 0; i < meshes_.size(); i++)
 		{
 			auto material = dynamic_object_materials_[i];
 
@@ -125,7 +144,7 @@ public:
 	void OnRender()
 	{
 		renderer_->Prepare();
-		renderer_->Render(renderables_);
+		renderer_->Render();
 	};
 
 };

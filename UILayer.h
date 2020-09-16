@@ -2,7 +2,7 @@
 
 #include "src/application/Layer.h"
 #include "src/renderer/BatchRenderer.h"
-#include "src/renderer/RenderableFactory.h"
+#include "src/renderer/MeshFactory.h"
 #include "src/renderer/materials/default/UIMaterial.h"
 #include "src/renderer/materials/default/TextureHolderMaterial.h"
 #include "src/renderer/Camera.h"
@@ -16,14 +16,14 @@ private:
 	Shader *shader_;
 	UIMaterial *material_;
 
-	std::vector<Renderable*> renderables_;
+	std::vector<Mesh*> renderables_;
 
 	Texture *h_texture_;
 	Texture *o_texture_;
 	TextureHolderMaterial *h_material_;
 	TextureHolderMaterial *o_material_;
-	Renderable *h_renderable_;
-	Renderable *o_renderable_;
+	Mesh *h_renderable_;
+	Mesh *o_renderable_;
 
 public:
 	~UILayer()
@@ -57,13 +57,13 @@ public:
 
 		float scale = 0.005;
 
-		h_renderable_ = RenderableFactory::CreateQuad(
+		h_renderable_ = MeshFactory::CreateQuad(
 			h_texture_->width() * scale,
 			h_texture_->height() * scale,
 			{ -5, 0 },
 			h_material_
 		);
-		o_renderable_ = RenderableFactory::CreateQuad(
+		o_renderable_ = MeshFactory::CreateQuad(
 			o_texture_->width() * scale,
 			o_texture_->height() * scale,
 			{ 5, 0 },

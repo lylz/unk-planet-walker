@@ -2,7 +2,7 @@
 
 #include <map>
 #include "../utils/GLIncludes.h"
-#include "Renderable.h"
+#include "Mesh.h"
 #include "./materials/BatchMaterial.h"
 
 class BatchRenderer
@@ -11,7 +11,7 @@ public:
 	BatchRenderer(BatchMaterial *global_material);
 	~BatchRenderer();
 
-	void Submit(Renderable *renderable);
+	void Submit(Mesh *renderable);
 	void Render();
 	void Flush();
 
