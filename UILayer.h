@@ -8,6 +8,7 @@
 #include "src/renderer/Camera.h"
 #include "src/application/InputManager.h"
 #include "src/renderer/font/FontLoader.h"
+#include "src/renderer/ui/Text.h"
 
 class UILayer : public Layer
 {
@@ -17,27 +18,11 @@ private:
 	Shader *shader_;
 	UIMaterial *material_;
 
-	std::vector<Mesh*> renderables_;
-
-	Texture *h_texture_;
-	Texture *o_texture_;
-	TextureHolderMaterial *h_material_;
-	TextureHolderMaterial *o_material_;
-	Mesh *h_renderable_;
-	Mesh *o_renderable_;
+	Text *text_;
 
 public:
 	~UILayer()
 	{
-		delete h_renderable_;
-		delete o_renderable_;
-		delete h_material_;
-		delete o_material_;
-		delete h_texture_;
-		delete o_texture_;
-
-		renderables_.clear();
-
 		delete renderer_;
 		delete material_;
 		delete shader_;
@@ -46,34 +31,17 @@ public:
 	void Init()
 	{
 		SetVisible(true);
-		Font font = FontLoader::Load("assets/fonts/VCR_OSD_MONO.ttf");
+		Font font = FontLoader::Load("assets/fonts/m6x11.ttf");
+		text_ = new Text("Hey, Jimmy, grghh...", font);
+
 		shader_ = Shader::CreateFromFiles("src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
 		material_ = new UIMaterial(shader_);
 		renderer_ = new BatchRenderer(material_);
 
-		h_texture_ = new Texture("assets/H.png");
-		o_texture_ = new Texture("assets/O.png");
-
-		h_material_ = new TextureHolderMaterial(h_texture_);
-		o_material_ = new TextureHolderMaterial(o_texture_);
-
-		float scale = 0.005;
-
-		h_renderable_ = MeshFactory::CreateQuad(
-			h_texture_->width() * scale,
-			h_texture_->height() * scale,
-			{ -5, 0 },
-			h_material_
-		);
-		o_renderable_ = MeshFactory::CreateQuad(
-			o_texture_->width() * scale,
-			o_texture_->height() * scale,
-			{ 5, 0 },
-			o_material_
-		);
-
-		renderer_->Submit(h_renderable_);
-		renderer_->Submit(o_renderable_);
+		for (auto mesh : text_->meshes())
+		{
+			renderer_->Submit(mesh);
+		}
 	}
 
 	void OnUpdate()

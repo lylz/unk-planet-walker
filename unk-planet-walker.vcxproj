@@ -157,8 +157,10 @@
     <ClCompile Include="src\renderer\Renderer.cpp" />
     <ClCompile Include="src\application\Window.cpp" />
     <ClCompile Include="src\renderer\Texture.cpp" />
+    <ClCompile Include="src\renderer\ui\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\font\Font.h" />
     <ClInclude Include="src\renderer\font\FontLoader.h" />
     <ClInclude Include="src\renderer\MeshFactory.h" />
     <ClInclude Include="src\renderer\materials\BatchMaterial.h" />
@@ -177,6 +179,7 @@
     <ClInclude Include="src\renderer\Vertex.h" />
     <ClInclude Include="SceneLayer.h" />
     <ClInclude Include="src\renderer\materials\default\TextureHolderMaterial.h" />
+    <ClInclude Include="src\renderer\ui\Text.h" />
     <ClInclude Include="UILayer.h" />
     <ClInclude Include="src\utils\GLIncludes.h" />
     <ClInclude Include="src\utils\Randomizer.h" />

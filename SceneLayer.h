@@ -100,8 +100,8 @@ public:
 		meshes_.push_back(mesh1);
 		meshes_.push_back(mesh2);
 		renderer_->Submit(mesh);
-		renderer_->Submit(mesh1);
-		renderer_->Submit(mesh2);
+		//renderer_->Submit(mesh1);
+		//renderer_->Submit(mesh2);
 	};
 
 	void OnUpdate()
