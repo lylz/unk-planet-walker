@@ -117,13 +117,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\lib\glew-2.1.0\include;C:\lib\glfw-3.3.2.bin.WIN64\include;C:\lib\glm\include;C:\lib\stb-master;C:\lib\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\lib\freetype-windows-binaries-master\include;C:\lib\glew-2.1.0\include;C:\lib\glfw-3.3.2.bin.WIN64\include;C:\lib\glm\include;C:\lib\stb-master;C:\lib\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\lib\glew-2.1.0\lib\Release\x64;C:\lib\glfw-3.3.2.bin.WIN64\lib-vc2019;C:\lib\freeglut\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\lib\freetype-windows-binaries-master\win64;C:\lib\glew-2.1.0\lib\Release\x64;C:\lib\glfw-3.3.2.bin.WIN64\lib-vc2019;C:\lib\freeglut\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;freeglut.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\font\FontLoader.cpp" />
     <ClCompile Include="src\renderer\MeshFactory.cpp" />
     <ClCompile Include="src\renderer\materials\BatchMaterial.cpp" />
     <ClCompile Include="src\renderer\materials\default\UIMaterial.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="src\renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\font\FontLoader.h" />
     <ClInclude Include="src\renderer\MeshFactory.h" />
     <ClInclude Include="src\renderer\materials\BatchMaterial.h" />
     <ClInclude Include="src\renderer\materials\default\UIMaterial.h" />

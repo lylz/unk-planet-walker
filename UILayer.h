@@ -7,6 +7,7 @@
 #include "src/renderer/materials/default/TextureHolderMaterial.h"
 #include "src/renderer/Camera.h"
 #include "src/application/InputManager.h"
+#include "src/renderer/font/FontLoader.h"
 
 class UILayer : public Layer
 {
@@ -45,6 +46,7 @@ public:
 	void Init()
 	{
 		SetVisible(true);
+		Font font = FontLoader::Load("assets/fonts/VCR_OSD_MONO.ttf");
 		shader_ = Shader::CreateFromFiles("src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
 		material_ = new UIMaterial(shader_);
 		renderer_ = new BatchRenderer(material_);

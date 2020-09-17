@@ -30,7 +30,6 @@ public:
 		speed_ = .5f;
 	};
 
-
 	~SceneLayer()
 	{
 		for (auto material : dynamic_object_materials_)
