@@ -1,10 +1,10 @@
 #include "UIMaterial.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 UIMaterial::UIMaterial(Shader *shader)
 	: BatchMaterial(shader)
 {
-	view_matrix_ = glm::mat4(1.0f);
-	projection_matrix_ = glm::mat4(1.0f);
+	orthographic_matrix_ = glm::ortho(0.0f, 720.0f, 1024.0f, 0.0f, -1.0f, 1.0f);
 };
 
 void UIMaterial::Bind()
@@ -23,9 +23,7 @@ void UIMaterial::Bind()
 	}
 
 	shader_->SetUniform("u_Textures", texture_slots.data(), texture_slots.size());
-
-	shader_->SetUniform("u_Proj", projection_matrix_);
-	shader_->SetUniform("u_View", view_matrix_);
+	shader_->SetUniform("u_Ortho", orthographic_matrix_);
 }
 
 void UIMaterial::Unbind()
@@ -36,14 +34,4 @@ void UIMaterial::Unbind()
 
 		texture->Unbind(i);
 	}
-}
-
-void UIMaterial::SetViewMatrix(glm::mat4 view_matrix)
-{
-	view_matrix_ = view_matrix;
-}
-
-void UIMaterial::SetProjectionMatrix(glm::mat4 projection_matrix)
-{
-	projection_matrix_ = projection_matrix;
 }

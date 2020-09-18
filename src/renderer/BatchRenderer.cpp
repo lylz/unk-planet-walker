@@ -90,7 +90,8 @@ void BatchRenderer::Submit(Mesh *renderable)
 void BatchRenderer::Render()
 {
 	GLWCall(glEnable(GL_BLEND));
-	GLWCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	GLWCall(glBlendColor(0, 0, 0, 1));
+	GLWCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR));
 
 	global_material_->Bind();
 

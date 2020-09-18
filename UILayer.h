@@ -50,9 +50,6 @@ public:
 		{
 			SetVisible(!visible_);
 		}
-
-		material_->SetViewMatrix(Camera::GetInstance().view_matrix());
-		material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
 	}
 
 	void OnRender()
