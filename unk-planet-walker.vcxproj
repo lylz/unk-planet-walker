@@ -158,6 +158,7 @@
     <ClCompile Include="src\application\Window.cpp" />
     <ClCompile Include="src\renderer\Texture.cpp" />
     <ClCompile Include="src\renderer\ui\Text.cpp" />
+    <ClCompile Include="src\utils\GLUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderer\font\Font.h" />

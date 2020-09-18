@@ -13,15 +13,14 @@ Texture::Texture(const char *file_path)
 		throw std::runtime_error("ERROR: unable to load texture image.\n");
 	}
 
-	// load
-	glGenTextures(1, &id_);
-	glBindTexture(GL_TEXTURE_2D, id_);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_pixels);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	GLWCall(glGenTextures(1, &id_));
+	GLWCall(glBindTexture(GL_TEXTURE_2D, id_));
+	GLWCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+	GLWCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+	GLWCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0));
+	GLWCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
+	GLWCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_pixels));
+	GLWCall(glBindTexture(GL_TEXTURE_2D, 0));
 
 	stbi_image_free(image_pixels);
 }
@@ -43,12 +42,12 @@ int Texture::height()
 
 void Texture::Bind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, id_);
+	GLWCall(glActiveTexture(GL_TEXTURE0 + slot));
+	GLWCall(glBindTexture(GL_TEXTURE_2D, id_));
 }
 
 void Texture::Unbind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	GLWCall(glActiveTexture(GL_TEXTURE0 + slot));
+	GLWCall(glBindTexture(GL_TEXTURE_2D, 0));
 }

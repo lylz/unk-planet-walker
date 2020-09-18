@@ -111,8 +111,8 @@ void Application::Update(long double dt)
 
 void Application::Render()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	GLWCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	GLWCall(glClearColor(0.0, 0.0, 0.0, 1.0));
 
 	for (size_t i = 0; i < layers_.size(); i++)
 	{

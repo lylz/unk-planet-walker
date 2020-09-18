@@ -13,34 +13,34 @@ BatchRenderer::BatchRenderer(BatchMaterial *global_material)
 	global_material_ = global_material;
 	texture_slot_index_ = 0;
 
-	glGenVertexArrays(1, &vertex_array_id_);
-	glBindVertexArray(vertex_array_id_);
+	GLWCall(glGenVertexArrays(1, &vertex_array_id_));
+	GLWCall(glBindVertexArray(vertex_array_id_));
 
-	glGenBuffers(1, &vertex_buffer_id_);
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferData(GL_ARRAY_BUFFER, BATCH_RENDERER_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+	GLWCall(glGenBuffers(1, &vertex_buffer_id_));
+	GLWCall(glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_));
+	GLWCall(glBufferData(GL_ARRAY_BUFFER, BATCH_RENDERER_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW));
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, position));
+	GLWCall(glEnableVertexAttribArray(0));
+	GLWCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, position)));
 
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, color));
+	GLWCall(glEnableVertexAttribArray(1));
+	GLWCall(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, color)));
 
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, uv));
+	GLWCall(glEnableVertexAttribArray(2));
+	GLWCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, uv)));
 
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, texture_id));
+	GLWCall(glEnableVertexAttribArray(3));
+	GLWCall(glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, texture_id)));
 
-	glGenBuffers(1, &index_buffer_id_);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, BATCH_RENDERER_INDICES_SIZE, nullptr, GL_DYNAMIC_DRAW);
+	GLWCall(glGenBuffers(1, &index_buffer_id_));
+	GLWCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_));
+	GLWCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, BATCH_RENDERER_INDICES_SIZE, nullptr, GL_DYNAMIC_DRAW));
 }
 
 BatchRenderer::~BatchRenderer()
 {
-	glDeleteBuffers(1, &vertex_buffer_id_);
-	glDeleteBuffers(1, &index_buffer_id_);
+	GLWCall(glDeleteBuffers(1, &vertex_buffer_id_));
+	GLWCall(glDeleteBuffers(1, &index_buffer_id_));
 }
 
 void BatchRenderer::Submit(Mesh *renderable)
@@ -89,18 +89,18 @@ void BatchRenderer::Submit(Mesh *renderable)
 
 void BatchRenderer::Render()
 {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	GLWCall(glEnable(GL_BLEND));
+	GLWCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 	global_material_->Bind();
 
-	glBindVertexArray(vertex_array_id_);
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_.size() * sizeof(Vertex), vertices_.data());
-	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices_.size() * sizeof(unsigned int), indices_.data());
+	GLWCall(glBindVertexArray(vertex_array_id_));
+	GLWCall(glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_));
+	GLWCall(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_.size() * sizeof(Vertex), vertices_.data()));
+	GLWCall(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices_.size() * sizeof(unsigned int), indices_.data()));
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);
+	GLWCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+	GLWCall(glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0));
 }
 
 void BatchRenderer::Flush()
