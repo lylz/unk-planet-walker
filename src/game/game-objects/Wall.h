@@ -1,17 +1,24 @@
 #pragma once
 
 #include "../GameObject.h"
-#include "../../renderer/materials/default/DynamicObjectMaterial.h"
+#include "../../renderer/materials/default/TextureHolderMaterial.h"
+
+enum class WallType
+{
+	LEFT_SIDE,
+	RIGHT_SIDE,
+	TOPDOWN
+};
 
 class Wall: public GameObject
 {
 public:
-	Wall();
+	Wall(WallType type, glm::vec3 position);
 	~Wall();
 
 	void OnUpdate();
 
 private:
-	DynamicObjectMaterial *material_;
+	TextureHolderMaterial *material_;
 };
 

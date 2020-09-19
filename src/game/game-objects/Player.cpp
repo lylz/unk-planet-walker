@@ -31,7 +31,7 @@ Player::Player()
 	);
 
 	position_ = glm::vec3(0);
-	speed_ = 0.5f;
+	speed_ = 5.0f;
 }
 
 Player::~Player()

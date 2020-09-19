@@ -2,21 +2,27 @@
 
 #include "../../renderer/shaders/ShaderManager.h"
 #include "../../renderer/TextureManager.h"
-#include "../../renderer/materials/default/DynamicObjectMaterial.h"
 #include "../../renderer/MeshFactory.h"
 #include "../../application/InputManager.h"
-#include "../../renderer/Camera.h"
 
-Wall::Wall()
+Wall::Wall(WallType type, glm::vec3 position)
 {
-	Shader *shader = ShaderManager::GetInstance().Get("DynamicObject");
+	const char *texture_name;
 
-	if (shader == nullptr)
+	switch (type)
 	{
-		throw std::runtime_error("ERROR: Player cannot aquare required shader resource!\n");
+	case WallType::LEFT_SIDE:
+		texture_name = "WallSide";
+		break;
+	case WallType::RIGHT_SIDE:
+		texture_name = "WallSide";
+		break;
+	case WallType::TOPDOWN:
+	default:
+		texture_name = "Wall";
 	}
 
-	Texture *texture = TextureManager::GetInstance().Get("Wall");
+	Texture *texture = TextureManager::GetInstance().Get(texture_name);
 
 	if (texture == nullptr)
 	{
@@ -24,10 +30,11 @@ Wall::Wall()
 	}
 
 	float scale = 0.125f;
-	material_ = new DynamicObjectMaterial(shader, texture);
+	material_ = new TextureHolderMaterial(texture);
 	mesh_ = MeshFactory::CreateQuad(
 		texture->width() * scale,
 		texture->height() * scale,
+		position,
 		material_
 	);
 }
@@ -40,7 +47,5 @@ Wall::~Wall()
 
 void Wall::OnUpdate()
 {
-	material_->SetViewMatrix(Camera::GetInstance().view_matrix());
-	material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
 }
 

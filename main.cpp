@@ -3,6 +3,7 @@
 
 #include "src/utils/GLIncludes.h" // wierd hackish stuff should be included first in the app to prevent an dependency error about gl.h
 #include "src/application/Application.h"
+#include "MapLayer.h"
 #include "SceneLayer.h"
 #include "UILayer.h"
 
@@ -16,6 +17,7 @@ public:
 protected:
 	void OnInit()
 	{
+		AddLayer(new MapLayer);
 		AddLayer(new SceneLayer);
 		AddLayer(new UILayer);
 	}

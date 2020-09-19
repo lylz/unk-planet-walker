@@ -11,8 +11,8 @@ Mesh *MeshFactory::CreateQuad(float width, float height, glm::vec2 position, Mat
 
 	float px = position.x;
 	float py = position.y;
-	float w = width;
-	float h = height;
+	float w = width / 2;
+	float h = height / 2;
 
 	v1.position = { px-w, py-h, 0.0f };
 	v1.color = { 0.4f, 0.5f, 0.6f, 1.0f };

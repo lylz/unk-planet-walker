@@ -2,15 +2,27 @@
 
 #include "GameObject.h"
 
+enum class MapEntry
+{
+	WALL,
+	ENTRANCE,
+	EXIT,
+	HEALTH_POUCH,
+	OXYGEN_CAN,
+	ENEMY,
+	EMPTY
+};
+
 class Level
 {
 public:
 	Level(unsigned int size);
 	~Level();
 
-	std::vector<Mesh *> meshes();
+	std::vector<GameObject *> game_objects();
 
 private:
+	std::vector<std::vector<MapEntry>> map_;
 	std::vector<GameObject*> game_objects_;
 
 	void SetupWalls();

@@ -8,7 +8,6 @@
 #include "src/renderer/TextureManager.h"
 #include "src/game/GameObject.h"
 #include "src/game/game-objects/Player.h"
-#include "src/game/game-objects/Wall.h"
 
 class SceneLayer : public Layer
 {
@@ -22,7 +21,7 @@ public:
 	{
 		renderer_ = nullptr;
 		visible_ = true;
-		Camera::GetInstance().position.z = 120;
+		Camera::GetInstance().position.z = 60;
 	};
 
 	~SceneLayer()
@@ -38,18 +37,11 @@ public:
 		SetVisible(true);
 		renderer_ = new Renderer;
 
-		Shader *dynamic_object_shader = Shader::CreateFromFiles("DynamicObject", "src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
-		Texture *planet_walker_texture = new Texture("PlanetWalker", "assets/PlanetWalker.png");
-		Texture *wall_texture = new Texture("Wall", "assets/Wall.png");
-
-		ShaderManager::GetInstance().Add(dynamic_object_shader);
-		TextureManager::GetInstance().Add(planet_walker_texture);
-		TextureManager::GetInstance().Add(wall_texture);
+		ShaderManager::GetInstance().Add(Shader::CreateFromFiles("DynamicObject", "src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag"));
+		TextureManager::GetInstance().Add(new Texture("PlanetWalker", "assets/PlanetWalker.png"));
 
 		Player *player = new Player();
-		Wall *wall = new Wall();
 
-		game_objects_.push_back(wall);
 		game_objects_.push_back(player);
 
 		for (GameObject *game_object : game_objects_)

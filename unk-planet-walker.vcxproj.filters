@@ -78,6 +78,9 @@
     <ClCompile Include="src\game\game-objects\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\materials\default\StaticObjectsMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderer\Renderer.h">
@@ -176,6 +179,12 @@
     <ClInclude Include="src\game\game-objects\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\materials\default\StaticObjectsMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\fonts\.font_atlas.png">
@@ -205,10 +214,10 @@
     <Image Include="assets\Wall.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\Wall2.png">
+    <Image Include="assets\WallSide.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\WallSide.png">
+    <Image Include="assets\WallSide2.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
