@@ -143,6 +143,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game-objects\Player.cpp" />
+    <ClCompile Include="src\game\game-objects\Wall.cpp" />
+    <ClCompile Include="src\game\Level.cpp" />
+    <ClCompile Include="src\renderer\shaders\ShaderManager.cpp" />
     <ClCompile Include="src\renderer\font\FontLoader.cpp" />
     <ClCompile Include="src\renderer\MeshFactory.cpp" />
     <ClCompile Include="src\renderer\materials\BatchMaterial.cpp" />
@@ -159,8 +163,14 @@
     <ClCompile Include="src\renderer\Texture.cpp" />
     <ClCompile Include="src\renderer\ui\Text.cpp" />
     <ClCompile Include="src\utils\GLUtils.cpp" />
+    <ClCompile Include="src\renderer\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game-objects\Player.h" />
+    <ClInclude Include="src\game\game-objects\Wall.h" />
+    <ClInclude Include="src\game\GameObject.h" />
+    <ClInclude Include="src\game\Level.h" />
+    <ClInclude Include="src\renderer\shaders\ShaderManager.h" />
     <ClInclude Include="src\renderer\font\Font.h" />
     <ClInclude Include="src\renderer\font\FontLoader.h" />
     <ClInclude Include="src\renderer\MeshFactory.h" />
@@ -172,6 +182,7 @@
     <ClInclude Include="src\renderer\materials\Material.h" />
     <ClInclude Include="src\renderer\Camera.h" />
     <ClInclude Include="src\application\Layer.h" />
+    <ClInclude Include="src\renderer\Resource.h" />
     <ClInclude Include="src\renderer\shaders\Shader.h" />
     <ClInclude Include="src\renderer\Renderable.h" />
     <ClInclude Include="src\renderer\Mesh.h" />
@@ -181,11 +192,32 @@
     <ClInclude Include="SceneLayer.h" />
     <ClInclude Include="src\renderer\materials\default\TextureHolderMaterial.h" />
     <ClInclude Include="src\renderer\ui\Text.h" />
+    <ClInclude Include="src\renderer\TextureManager.h" />
     <ClInclude Include="UILayer.h" />
     <ClInclude Include="src\utils\GLIncludes.h" />
     <ClInclude Include="src\utils\Randomizer.h" />
     <ClInclude Include="src\application\Window.h" />
     <ClInclude Include="src\renderer\Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\atlas.png" />
+    <Image Include="assets\fonts\.font_atlas.png" />
+    <Image Include="assets\Guard.png" />
+    <Image Include="assets\PlanetWalker.png" />
+    <Image Include="assets\Plant.png" />
+    <Image Include="assets\Protagonist.png" />
+    <Image Include="assets\Rapid.png" />
+    <Image Include="assets\Start.png" />
+    <Image Include="assets\Wall.png" />
+    <Image Include="assets\Wall2.png" />
+    <Image Include="assets\WallSide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\m6x11.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="LICENSE" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

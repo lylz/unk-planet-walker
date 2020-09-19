@@ -2,60 +2,35 @@
 
 #include "src/application/Layer.h"
 #include "src/renderer/Renderer.h"
-#include "src/renderer/Mesh.h"
-#include "src/renderer/MeshFactory.h"
-#include "src/renderer/materials/default/DynamicObjectMaterial.h"
 #include "src/renderer/Camera.h"
 #include "src/application/InputManager.h"
+#include "src/renderer/shaders/ShaderManager.h"
+#include "src/renderer/TextureManager.h"
+#include "src/game/GameObject.h"
+#include "src/game/game-objects/Player.h"
+#include "src/game/game-objects/Wall.h"
 
 class SceneLayer : public Layer
 {
 private:
 	Renderer *renderer_;
 
-	std::vector<Shader*> dynamic_object_shaders_;
-	std::vector<Texture*> dynamic_object_textures_;
-	std::vector<DynamicObjectMaterial*> dynamic_object_materials_;
-
-	std::vector<Mesh*> meshes_;
-	glm::vec3 position_;
-	float speed_;
+	std::vector<GameObject*> game_objects_;
 
 public:
 	SceneLayer()
 	{
 		renderer_ = nullptr;
 		visible_ = true;
-		position_ = glm::vec3(0, 0, 3);
-		speed_ = .5f;
+		Camera::GetInstance().position.z = 120;
 	};
 
 	~SceneLayer()
 	{
-		for (auto material : dynamic_object_materials_)
+		for (unsigned int i = 0; i < game_objects_.size(); i++)
 		{
-			delete material;
+			delete game_objects_[i];
 		}
-
-		for (auto shader : dynamic_object_shaders_)
-		{
-			delete shader;
-		}
-
-		for (auto texture : dynamic_object_textures_)
-		{
-			delete texture;
-		}
-
-		for (auto mesh : meshes_)
-		{
-			delete mesh;
-		}
-
-		dynamic_object_materials_.clear();
-		dynamic_object_shaders_.clear();
-		dynamic_object_textures_.clear();
-		meshes_.clear();
 	}
 
 	void Init()
@@ -63,80 +38,31 @@ public:
 		SetVisible(true);
 		renderer_ = new Renderer;
 
-		Shader *dynamic_object = Shader::CreateFromFiles("src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
-		Texture *dynamic_object_texture = new Texture("assets/Protagonist.png");
-		Texture *dynamic_object_texture1 = new Texture("assets/Rapid.png");
-		Texture *dynamic_object_texture2 = new Texture("assets/Protagonist.png");
-		DynamicObjectMaterial *dynamic_object_material = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture);
-		DynamicObjectMaterial *dynamic_object_material1 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture1);
-		DynamicObjectMaterial *dynamic_object_material2 = new DynamicObjectMaterial(dynamic_object, dynamic_object_texture2);
+		Shader *dynamic_object_shader = Shader::CreateFromFiles("DynamicObject", "src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag");
+		Texture *planet_walker_texture = new Texture("PlanetWalker", "assets/PlanetWalker.png");
+		Texture *wall_texture = new Texture("Wall", "assets/Wall.png");
 
-		float scale = .125f;
+		ShaderManager::GetInstance().Add(dynamic_object_shader);
+		TextureManager::GetInstance().Add(planet_walker_texture);
+		TextureManager::GetInstance().Add(wall_texture);
 
-		Mesh *mesh = MeshFactory::CreateQuad(
-			dynamic_object_texture->width() * scale,
-			dynamic_object_texture->height() * scale,
-			dynamic_object_material
-		);
-		Mesh *mesh1 = MeshFactory::CreateQuad(
-			dynamic_object_texture1->width() * scale,
-			dynamic_object_texture1->height() * scale,
-			dynamic_object_material1
-		);
-		Mesh *mesh2 = MeshFactory::CreateQuad(
-			dynamic_object_texture2->width() * scale,
-			dynamic_object_texture2->height() * scale,
-			dynamic_object_material2
-		);
+		Player *player = new Player();
+		Wall *wall = new Wall();
 
-		dynamic_object_shaders_.push_back(dynamic_object);
-		dynamic_object_textures_.push_back(dynamic_object_texture);
-		dynamic_object_textures_.push_back(dynamic_object_texture1);
-		dynamic_object_textures_.push_back(dynamic_object_texture2);
-		dynamic_object_materials_.push_back(dynamic_object_material);
-		dynamic_object_materials_.push_back(dynamic_object_material1);
-		dynamic_object_materials_.push_back(dynamic_object_material2);
-		meshes_.push_back(mesh);
-		meshes_.push_back(mesh1);
-		meshes_.push_back(mesh2);
-		renderer_->Submit(mesh);
-		//renderer_->Submit(mesh1);
-		//renderer_->Submit(mesh2);
+		game_objects_.push_back(wall);
+		game_objects_.push_back(player);
+
+		for (GameObject *game_object : game_objects_)
+		{
+			renderer_->Submit(game_object->mesh());
+		}
 	};
 
 	void OnUpdate()
 	{
-		if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_W))
+		for (GameObject *game_object : game_objects_)
 		{
-			position_.y += speed_;
-		}
-
-		if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_S))
-		{
-			position_.y -= speed_;
-		}
-
-		if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_A))
-		{
-			position_.x -= speed_;
-		}
-
-		if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_D))
-		{
-			position_.x += speed_;
-		}
-
-		for (size_t i = 0; i < meshes_.size(); i++)
-		{
-			auto material = dynamic_object_materials_[i];
-
-			if (i == 0)
-			{
-				material->SetModelMatrix(glm::translate(glm::mat4(1), position_));
-			}
-
-			material->SetViewMatrix(Camera::GetInstance().view_matrix());
-			material->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
+			game_object->OnUpdate();
 		}
 	};
 

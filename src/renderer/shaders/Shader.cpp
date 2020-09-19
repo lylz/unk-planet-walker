@@ -25,7 +25,7 @@ struct ShaderFileExtension extensions[] =
 	{".cs",		ShaderType::COMPUTE}
 };
 
-Shader::Shader() : handle_(0), linked_(false) { }
+Shader::Shader(const char *name) : Resource(name), handle_(0), linked_(false) { }
 
 Shader::~Shader() {
 	if (handle_ == 0)
@@ -355,9 +355,9 @@ void Shader::ThrowShaderProgramError(std::string message)
 	throw ShaderException(message + log_string);
 }
 
-Shader* Shader::CreateFromFiles(const char *vertex_shader, const char *fragment_shader)
+Shader* Shader::CreateFromFiles(const char *name, const char *vertex_shader, const char *fragment_shader)
 {
-	Shader *shader = new Shader();
+	Shader *shader = new Shader(name);
 
 	shader->CompileShader(vertex_shader);
 	shader->CompileShader(fragment_shader);

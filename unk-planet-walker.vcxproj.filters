@@ -63,6 +63,21 @@
     <ClCompile Include="src\utils\GLUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\shaders\ShaderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game-objects\Wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game-objects\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderer\Renderer.h">
@@ -140,5 +155,68 @@
     <ClInclude Include="src\renderer\ui\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\shaders\ShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game-objects\Wall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game-objects\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\fonts\.font_atlas.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\atlas.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Guard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\PlanetWalker.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Plant.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Protagonist.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Rapid.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Start.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Wall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Wall2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\WallSide.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\m6x11.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="LICENSE" />
   </ItemGroup>
 </Project>

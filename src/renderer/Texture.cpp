@@ -4,7 +4,8 @@
 #include <stb_image.h>
 #include <stdexcept>
 
-Texture::Texture(const char *file_path)
+Texture::Texture(const char *name, const char *file_path)
+	: Resource(name)
 {
 	stbi_uc *image_pixels = stbi_load(file_path, &width_, &height_, &channels_, STBI_rgb_alpha);
 

@@ -6,6 +6,7 @@
 #include <map>
 #include <glm/glm.hpp>
 #include "../../utils/GLIncludes.h"
+#include "../Resource.h"
 
 class ShaderException : public std::runtime_error
 {
@@ -24,7 +25,7 @@ enum ShaderType
 	COMPUTE = GL_COMPUTE_SHADER
 };
 
-class Shader
+class Shader: public Resource
 {
 private:
 	int handle_;
@@ -37,7 +38,7 @@ private:
 	void ThrowShaderProgramError(std::string message);
 
 public:
-	Shader();
+	Shader(const char *name);
 	~Shader();
 
 	void CompileShader(const char *filename);
@@ -65,5 +66,5 @@ public:
 	void SetUniform(const char *name, int val);
 	void SetUniform(const char *name, bool val);
 
-	static Shader *CreateFromFiles(const char *vertex_shader, const char *fragment_shader);
+	static Shader *CreateFromFiles(const char *name, const char *vertex_shader, const char *fragment_shader);
 };

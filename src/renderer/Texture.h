@@ -1,11 +1,12 @@
 #pragma once
 
 #include "../utils/GLIncludes.h"
+#include "Resource.h"
 
-class Texture
+class Texture: public Resource
 {
 public:
-	Texture(const char *file_path);
+	Texture(const char *name, const char *file_path);
 
 	GLuint id();
 	int width();

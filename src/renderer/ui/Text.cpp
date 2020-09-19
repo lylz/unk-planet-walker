@@ -4,7 +4,7 @@
 Text::Text(std::string text, Font font)
 	: text_(text), font_(font)
 {
-	font_atlas_texture_ = new Texture(font_.atlas_path.c_str());
+	font_atlas_texture_ = new Texture("INTERNAL_Font", font_.atlas_path.c_str());
 	material_ = new TextureHolderMaterial(font_atlas_texture_);
 
 	x_ = 20;

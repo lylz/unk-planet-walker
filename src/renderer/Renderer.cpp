@@ -2,7 +2,7 @@
 
 Renderer::Renderer()
 {
-	default_shader_ = Shader::CreateFromFiles("src/renderer/shaders/default/default.vert", "src/renderer/shaders/default/default.frag");
+	default_shader_ = Shader::CreateFromFiles("INTERNAL_Default", "src/renderer/shaders/default/default.vert", "src/renderer/shaders/default/default.frag");
 }
 
 Renderer::~Renderer()

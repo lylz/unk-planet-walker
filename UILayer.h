@@ -34,7 +34,7 @@ public:
 		Font font = FontLoader::Load("assets/fonts/m6x11.ttf");
 		text_ = new Text("Hey, Jimmy, grghh...", font);
 
-		shader_ = Shader::CreateFromFiles("src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
+		shader_ = Shader::CreateFromFiles("UI", "src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
 		material_ = new UIMaterial(shader_);
 		renderer_ = new BatchRenderer(material_);
 
