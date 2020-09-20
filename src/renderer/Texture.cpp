@@ -69,7 +69,7 @@ void Texture::ParseAtlasInfo(const char *file_path)
 	{
 		SpriteInfo frame_info;
 
-		frame_info.name = frames[i]["filename"].GetString();
+		frame_info.name = frames[i]["name"].GetString();
 		frame_info.position.x = frames[i]["frame"]["x"].GetFloat();
 		frame_info.position.y = frames[i]["frame"]["y"].GetFloat();
 		frame_info.size.x = frames[i]["frame"]["w"].GetFloat();

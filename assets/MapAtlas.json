@@ -1,7 +1,7 @@
 {
 	"frames": [
 		{
-			"filename": "HealthPouch",
+			"name": "HealthPouch",
 			"frame": {
 				"x": 1,
 				"y": 1,
@@ -10,7 +10,7 @@
 			}
 		},
 		{
-			"filename": "OxygenCan",
+			"name": "OxygenCan",
 			"frame": {
 				"x": 35,
 				"y": 1,
@@ -19,7 +19,7 @@
 			}
 		},
 		{
-			"filename": "Passage",
+			"name": "Passage",
 			"frame": {
 				"x": 69,
 				"y": 1,
@@ -28,7 +28,7 @@
 			}
 		},
 		{
-			"filename": "Wall",
+			"name": "Wall",
 			"frame": {
 				"x": 103,
 				"y": 1,
@@ -37,7 +37,7 @@
 			}
 		},
 		{
-			"filename": "WallSide",
+			"name": "WallSide",
 			"frame": {
 				"x": 137,
 				"y": 1,
