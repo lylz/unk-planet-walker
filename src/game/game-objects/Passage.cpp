@@ -5,18 +5,15 @@
 
 Passage::Passage(PassageType type, glm::vec3 position)
 {
-	Texture *texture = TextureManager::GetInstance().Get("Passage");
-
-	if (texture == nullptr)
-	{
-		throw std::runtime_error("ERROR: Passage cannot aquare required texture!\n");
-	}
+	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
+	assert(texture != nullptr);
+	SpriteInfo sprite_info = texture->GetSpriteInfo("Passage");
 
 	float scale = 0.125f;
 	material_ = new TextureHolderMaterial(texture);
 	mesh_ = MeshFactory::CreateQuad(
-		texture->width() * scale,
-		texture->height() * scale,
+		sprite_info.size * scale,
+		sprite_info.uv,
 		position,
 		material_
 	);

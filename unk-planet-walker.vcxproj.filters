@@ -250,6 +250,12 @@
     <Image Include="assets\Passage.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\Enemy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\MapAtlas.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\m6x11.ttf" />
@@ -257,5 +263,6 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="LICENSE" />
+    <None Include="assets\MapAtlas.json" />
   </ItemGroup>
 </Project>

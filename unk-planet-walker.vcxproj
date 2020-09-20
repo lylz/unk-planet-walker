@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\lib\freetype-windows-binaries-master\include;C:\lib\glew-2.1.0\include;C:\lib\glfw-3.3.2.bin.WIN64\include;C:\lib\glm\include;C:\lib\stb-master;C:\lib\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\lib\freetype-windows-binaries-master\include;C:\lib\glew-2.1.0\include;C:\lib\glfw-3.3.2.bin.WIN64\include;C:\lib\glm\include;C:\lib\stb-master;C:\lib\freeglut\include;C:\lib\rapidjson-1.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\lib\freeglut\include;C:\lib\stb-master;C:\lib\freetype-windows-binaries-master\include;C:\lib\glew-2.1.0\include;C:\lib\glfw-3.3.2.bin.WIN64\include;C:\lib\glm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\lib\freeglut\include;C:\lib\stb-master;C:\lib\freetype-windows-binaries-master\include;C:\lib\glew-2.1.0\include;C:\lib\glfw-3.3.2.bin.WIN64\include;C:\lib\glm\include;C:\lib\rapidjson-1.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -217,8 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\atlas.png" />
+    <Image Include="assets\Enemy.png" />
     <Image Include="assets\fonts\.font_atlas.png" />
     <Image Include="assets\Guard.png" />
+    <Image Include="assets\MapAtlas.png" />
     <Image Include="assets\PlanetWalker.png" />
     <Image Include="assets\Plant.png" />
     <Image Include="assets\Protagonist.png" />
@@ -233,6 +235,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="assets\MapAtlas.json" />
     <None Include="LICENSE" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

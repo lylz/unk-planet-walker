@@ -5,15 +5,15 @@
 
 HealthPouch::HealthPouch(glm::vec3 position)
 {
-	Texture *texture = TextureManager::GetInstance().Get("HealthPouch");
-
+	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
 	assert(texture != nullptr);
+	SpriteInfo sprite_info = texture->GetSpriteInfo("HealthPouch");
 
 	float scale = 0.125f;
 	material_ = new TextureHolderMaterial(texture);
 	mesh_ = MeshFactory::CreateQuad(
-		texture->width() * scale,
-		texture->height() * scale,
+		sprite_info.size * scale,
+		sprite_info.uv,
 		position,
 		material_
 	);

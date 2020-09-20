@@ -25,8 +25,7 @@ Player::Player()
 	float scale = 0.125f;
 	material_ = new DynamicObjectMaterial(shader, texture);
 	mesh_ = MeshFactory::CreateQuad(
-		texture->width() * scale,
-		texture->height() * scale,
+		{ texture->width() * scale,	texture->height() * scale },
 		material_
 	);
 

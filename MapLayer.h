@@ -36,12 +36,8 @@ public:
 		material_ = new StaticObjectsMaterial(shader_);
 		renderer_ = new BatchRenderer(material_);
 
-		TextureManager::GetInstance().Add(new Texture("Wall", "assets/Wall.png"));
-		TextureManager::GetInstance().Add(new Texture("WallSide", "assets/WallSide.png"));
-		TextureManager::GetInstance().Add(new Texture("Passage", "assets/Passage.png"));
-		TextureManager::GetInstance().Add(new Texture("OxygenCan", "assets/OxygenCan.png"));
-		TextureManager::GetInstance().Add(new Texture("HealthPouch", "assets/HealthPouch.png"));
 		TextureManager::GetInstance().Add(new Texture("Enemy", "assets/Enemy.png"));
+		TextureManager::GetInstance().Add(new Texture("MapAtlas", "assets/MapAtlas.png", "assets/MapAtlas.json"));
 
 		level_ = new Level(10);
 

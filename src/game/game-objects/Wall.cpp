@@ -5,33 +5,30 @@
 
 Wall::Wall(WallType type, glm::vec3 position)
 {
-	const char *texture_name;
+	const char *sprite_name;
 
 	switch (type)
 	{
 	case WallType::LEFT_SIDE:
-		texture_name = "WallSide";
+		sprite_name = "WallSide";
 		break;
 	case WallType::RIGHT_SIDE:
-		texture_name = "WallSide";
+		sprite_name = "WallSide";
 		break;
 	case WallType::TOPDOWN:
 	default:
-		texture_name = "Wall";
+		sprite_name = "Wall";
 	}
 
-	Texture *texture = TextureManager::GetInstance().Get(texture_name);
-
-	if (texture == nullptr)
-	{
-		throw std::runtime_error("ERROR: Player cannot aquare required texture resource!\n");
-	}
+	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
+	assert(texture != nullptr);
+	SpriteInfo sprite_info = texture->GetSpriteInfo(sprite_name);
 
 	float scale = 0.125f;
 	material_ = new TextureHolderMaterial(texture);
 	mesh_ = MeshFactory::CreateQuad(
-		texture->width() * scale,
-		texture->height() * scale,
+		sprite_info.size * scale,
+		sprite_info.uv,
 		position,
 		material_
 	);
