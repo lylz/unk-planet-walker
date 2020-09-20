@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <chrono>
 
-#include "src/utils/GLIncludes.h" // wierd hackish stuff should be included first in the app to prevent an dependency error about gl.h
+#include "src/utils/GLIncludes.h" // should be included first in the app to prevent gl.h dependency error
 #include "src/application/Application.h"
 #include "MapLayer.h"
 #include "SceneLayer.h"

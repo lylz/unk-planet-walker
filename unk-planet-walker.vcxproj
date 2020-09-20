@@ -146,6 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game-objects\Enemy.cpp" />
+    <ClCompile Include="src\game\game-objects\HealthPouch.cpp" />
+    <ClCompile Include="src\game\game-objects\OxygenCan.cpp" />
+    <ClCompile Include="src\game\game-objects\Consumable.cpp" />
+    <ClCompile Include="src\game\game-objects\Passage.cpp" />
     <ClCompile Include="src\game\game-objects\Player.cpp" />
     <ClCompile Include="src\game\game-objects\Wall.cpp" />
     <ClCompile Include="src\game\Level.cpp" />
@@ -170,6 +175,11 @@
     <ClCompile Include="src\renderer\materials\default\StaticObjectsMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game-objects\Enemy.h" />
+    <ClInclude Include="src\game\game-objects\HealthPouch.h" />
+    <ClInclude Include="src\game\game-objects\OxygenCan.h" />
+    <ClInclude Include="src\game\game-objects\Consumable.h" />
+    <ClInclude Include="src\game\game-objects\Passage.h" />
     <ClInclude Include="src\game\game-objects\Player.h" />
     <ClInclude Include="src\game\game-objects\Wall.h" />
     <ClInclude Include="src\game\GameObject.h" />
@@ -213,7 +223,7 @@
     <Image Include="assets\Plant.png" />
     <Image Include="assets\Protagonist.png" />
     <Image Include="assets\Rapid.png" />
-    <Image Include="assets\Start.png" />
+    <Image Include="assets\Passage.png" />
     <Image Include="assets\WallSide.png" />
     <Image Include="assets\WallSide2.png" />
     <Image Include="assets\Wall.png" />

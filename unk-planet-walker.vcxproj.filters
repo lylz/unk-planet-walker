@@ -81,6 +81,21 @@
     <ClCompile Include="src\renderer\materials\default\StaticObjectsMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\game-objects\Passage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game-objects\Consumable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game-objects\OxygenCan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game-objects\HealthPouch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game-objects\Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderer\Renderer.h">
@@ -185,6 +200,21 @@
     <ClInclude Include="MapLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\game-objects\Passage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game-objects\Consumable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game-objects\OxygenCan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game-objects\HealthPouch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game-objects\Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\fonts\.font_atlas.png">
@@ -208,9 +238,6 @@
     <Image Include="assets\Rapid.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\Start.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\Wall.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -218,6 +245,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\WallSide2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Passage.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

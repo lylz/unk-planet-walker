@@ -38,8 +38,12 @@ public:
 
 		TextureManager::GetInstance().Add(new Texture("Wall", "assets/Wall.png"));
 		TextureManager::GetInstance().Add(new Texture("WallSide", "assets/WallSide.png"));
+		TextureManager::GetInstance().Add(new Texture("Passage", "assets/Passage.png"));
+		TextureManager::GetInstance().Add(new Texture("OxygenCan", "assets/OxygenCan.png"));
+		TextureManager::GetInstance().Add(new Texture("HealthPouch", "assets/HealthPouch.png"));
+		TextureManager::GetInstance().Add(new Texture("Enemy", "assets/Enemy.png"));
 
-		level_ = new Level(8);
+		level_ = new Level(10);
 
 		std::vector<GameObject *> game_objects = level_->game_objects();
 

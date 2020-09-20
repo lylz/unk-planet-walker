@@ -5,6 +5,7 @@
 enum class MapEntry
 {
 	WALL,
+	OBSTACLE,
 	ENTRANCE,
 	EXIT,
 	HEALTH_POUCH,
@@ -26,8 +27,11 @@ private:
 	std::vector<GameObject*> game_objects_;
 
 	void SetupWalls();
+	void SetupObstacles();
 	void SetupPassages();
 	void SetupEnemies();
 	void SetupConsumables();
+	void PlaceObject(MapEntry type, unsigned int amount);
+	bool HasNeighbors(int i, int j);
 };
 

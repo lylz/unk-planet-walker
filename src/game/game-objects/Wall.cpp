@@ -1,9 +1,7 @@
 #include "Wall.h"
 
-#include "../../renderer/shaders/ShaderManager.h"
 #include "../../renderer/TextureManager.h"
 #include "../../renderer/MeshFactory.h"
-#include "../../application/InputManager.h"
 
 Wall::Wall(WallType type, glm::vec3 position)
 {
