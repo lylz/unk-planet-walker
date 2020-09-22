@@ -3,9 +3,10 @@
 
 #include "src/utils/GLIncludes.h" // should be included first in the app to prevent gl.h dependency error
 #include "src/application/Application.h"
-#include "MapLayer.h"
-#include "SceneLayer.h"
-#include "UILayer.h"
+#include "src/game/GameManager.h"
+#include "src/game/MapLayer.h"
+#include "src/game/SceneLayer.h"
+#include "src/game/UILayer.h"
 
 class UnkPlanetWalkerApplication : public Application
 {
@@ -17,6 +18,7 @@ public:
 protected:
 	void OnInit()
 	{
+		GameManager::GetInstance().GenerateLevel();
 		AddLayer(new MapLayer);
 		AddLayer(new SceneLayer);
 		AddLayer(new UILayer);

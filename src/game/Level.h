@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include <vector>
 
 enum class MapEntry
 {
@@ -18,13 +18,11 @@ class Level
 {
 public:
 	Level(unsigned int size);
-	~Level();
 
-	std::vector<GameObject *> game_objects();
+	std::vector<std::vector<MapEntry>> map();
 
 private:
 	std::vector<std::vector<MapEntry>> map_;
-	std::vector<GameObject*> game_objects_;
 
 	void SetupWalls();
 	void SetupObstacles();

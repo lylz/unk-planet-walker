@@ -1,14 +1,14 @@
 #pragma once
 
-#include "src/application/Layer.h"
-#include "src/renderer/BatchRenderer.h"
-#include "src/renderer/MeshFactory.h"
-#include "src/renderer/materials/default/UIMaterial.h"
-#include "src/renderer/materials/default/TextureHolderMaterial.h"
-#include "src/renderer/Camera.h"
-#include "src/application/InputManager.h"
-#include "src/renderer/font/FontLoader.h"
-#include "src/renderer/ui/Text.h"
+#include "../application/InputManager.h"
+#include "../application/Layer.h"
+#include "../renderer/BatchRenderer.h"
+#include "../renderer/MeshFactory.h"
+#include "../renderer/materials/default/UIMaterial.h"
+#include "../renderer/materials/default/TextureHolderMaterial.h"
+#include "../renderer/Camera.h"
+#include "../renderer/font/FontLoader.h"
+#include "../renderer/ui/Text.h"
 
 class UILayer : public Layer
 {

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "src/application/Layer.h"
-#include "src/renderer/Renderer.h"
-#include "src/renderer/Camera.h"
-#include "src/application/InputManager.h"
-#include "src/renderer/shaders/ShaderManager.h"
-#include "src/renderer/TextureManager.h"
-#include "src/game/GameObject.h"
-#include "src/game/game-objects/Player.h"
+#include "../application/InputManager.h"
+#include "../application/Layer.h"
+#include "../renderer/Renderer.h"
+#include "../renderer/Camera.h"
+#include "../renderer/shaders/ShaderManager.h"
+#include "../renderer/TextureManager.h"
+#include "GameObject.h"
+#include "game-objects/Player.h"
 
 class SceneLayer : public Layer
 {

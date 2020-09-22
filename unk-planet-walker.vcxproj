@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\GameManager.cpp" />
     <ClCompile Include="src\game\game-objects\Enemy.cpp" />
     <ClCompile Include="src\game\game-objects\HealthPouch.cpp" />
     <ClCompile Include="src\game\game-objects\OxygenCan.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="src\renderer\materials\default\StaticObjectsMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\GameManager.h" />
     <ClInclude Include="src\game\game-objects\Enemy.h" />
     <ClInclude Include="src\game\game-objects\HealthPouch.h" />
     <ClInclude Include="src\game\game-objects\OxygenCan.h" />
@@ -184,7 +186,7 @@
     <ClInclude Include="src\game\game-objects\Wall.h" />
     <ClInclude Include="src\game\GameObject.h" />
     <ClInclude Include="src\game\Level.h" />
-    <ClInclude Include="MapLayer.h" />
+    <ClInclude Include="src\game\MapLayer.h" />
     <ClInclude Include="src\renderer\shaders\ShaderManager.h" />
     <ClInclude Include="src\renderer\font\Font.h" />
     <ClInclude Include="src\renderer\font\FontLoader.h" />
@@ -204,12 +206,12 @@
     <ClInclude Include="src\renderer\Renderer.h" />
     <ClInclude Include="src\application\InputManager.h" />
     <ClInclude Include="src\renderer\Vertex.h" />
-    <ClInclude Include="SceneLayer.h" />
+    <ClInclude Include="src\game\SceneLayer.h" />
     <ClInclude Include="src\renderer\materials\default\TextureHolderMaterial.h" />
     <ClInclude Include="src\renderer\ui\Text.h" />
     <ClInclude Include="src\renderer\TextureManager.h" />
     <ClInclude Include="src\renderer\materials\default\StaticObjectsMaterial.h" />
-    <ClInclude Include="UILayer.h" />
+    <ClInclude Include="src\game\UILayer.h" />
     <ClInclude Include="src\utils\GLIncludes.h" />
     <ClInclude Include="src\utils\Randomizer.h" />
     <ClInclude Include="src\application\Window.h" />
