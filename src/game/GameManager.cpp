@@ -12,6 +12,11 @@ GameManager::GameManager()
 	level_ = nullptr;
 }
 
+GameManager::~GameManager()
+{
+	delete level_;
+}
+
 void GameManager::GenerateLevel()
 {
 	if (level_ != nullptr)
@@ -26,3 +31,4 @@ Level *GameManager::level()
 {
 	return level_;
 }
+

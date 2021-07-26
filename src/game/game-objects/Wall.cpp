@@ -5,6 +5,8 @@
 
 Wall::Wall(WallType type, glm::vec3 position)
 {
+	name_ = "Wall";
+
 	const char *sprite_name;
 
 	switch (type)

@@ -5,6 +5,8 @@
 
 HealthPouch::HealthPouch(glm::vec3 position)
 {
+	name_ = "HealthPouch";
+
 	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
 	assert(texture != nullptr);
 	SpriteInfo sprite_info = texture->GetSpriteInfo("HealthPouch");

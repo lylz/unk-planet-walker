@@ -5,6 +5,8 @@
 
 Passage::Passage(PassageType type, glm::vec3 position)
 {
+	name_ = "Passage";
+
 	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
 	assert(texture != nullptr);
 	SpriteInfo sprite_info = texture->GetSpriteInfo("Passage");

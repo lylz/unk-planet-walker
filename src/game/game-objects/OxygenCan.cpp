@@ -5,6 +5,8 @@
 
 OxygenCan::OxygenCan(glm::vec3 position)
 {
+	name_ = "OxygenCan";
+
 	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
 	assert(texture != nullptr);
 	SpriteInfo sprite_info = texture->GetSpriteInfo("OxygenCan");

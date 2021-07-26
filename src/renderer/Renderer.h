@@ -14,6 +14,7 @@ public:
 	void Submit(Mesh *mesh);
 	void Prepare();
 	void Render();
+	void Flush();
 
 private:
 	Shader *default_shader_;

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include "Level.h"
 
+// TODO: implement start stop mechanism
+// TODO: maybe level shoudn't be a pointer
 class GameManager
 {
 public:
@@ -16,6 +19,7 @@ public:
 	
 private:
 	GameManager();
+	~GameManager();
 
 	Level *level_;
 };

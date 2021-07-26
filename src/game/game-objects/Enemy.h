@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../GameObject.h"
-#include "../../renderer/materials/default/TextureHolderMaterial.h"
+#include "../../renderer/materials/default/DynamicObjectMaterial.h"
 
 class Enemy: public GameObject
 {
@@ -12,6 +12,6 @@ public:
 	void OnUpdate();
 
 private:
-	TextureHolderMaterial *material_;
+	DynamicObjectMaterial *material_;
 };
 

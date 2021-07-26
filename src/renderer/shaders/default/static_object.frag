@@ -10,7 +10,7 @@ layout (binding = 0) uniform sampler2D u_Texture[32];
 
 void main()
 {
-	vec4 color = vec4(0.5, 0.6, 0.7, 1.0);
+	vec4 color = v_Color;
 
 	if (v_TextureId >= 0)
 	{

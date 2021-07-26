@@ -18,6 +18,11 @@ void Renderer::Submit(Mesh *mesh)
 	renderables_.push_back(renderable);
 }
 
+void Renderer::Flush()
+{
+	renderables_.clear();
+}
+
 void Renderer::Prepare()
 {
 	// glEnable(GL_DEPTH_TEST);

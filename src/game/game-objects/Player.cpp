@@ -5,9 +5,14 @@
 #include "../../renderer/MeshFactory.h"
 #include "../../application/InputManager.h"
 #include "../../renderer/Camera.h"
+#include "../GameManager.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 Player::Player()
 {
+	name_ = "Player";
+
 	Shader *shader = ShaderManager::GetInstance().Get("DynamicObject");
 	
 	if (shader == nullptr)
@@ -26,11 +31,9 @@ Player::Player()
 	material_ = new DynamicObjectMaterial(shader, texture);
 	mesh_ = MeshFactory::CreateQuad(
 		{ texture->width() * scale,	texture->height() * scale },
+		glm::vec3(0),
 		material_
 	);
-
-	position_ = glm::vec3(0);
-	speed_ = 4.0f;
 }
 
 Player::~Player()
@@ -41,27 +44,82 @@ Player::~Player()
 
 void Player::OnUpdate()
 {
-	if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_W))
-	{
-		position_.y += speed_;
-	}
+	Update();
 
-	if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_S))
-	{
-		position_.y -= speed_;
-	}
+	Level *level = GameManager::GetInstance().level();
+	assert(level != nullptr);
 
-	if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_A))
-	{
-		position_.x -= speed_;
-	}
+	glm::vec2 map_position = level->GetGameObjectPositionById(id());
+	glm::vec3 position = level->CalculateInWorldPosition(map_position.x, map_position.y);
 
-	if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_D))
-	{
-		position_.x += speed_;
-	}
-
-	material_->SetModelMatrix(glm::translate(glm::mat4(1), position_));
+	material_->SetModelMatrix(glm::translate(glm::mat4(1), position));
 	material_->SetViewMatrix(Camera::GetInstance().view_matrix());
 	material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
+}
+
+void Player::Update()
+{
+	if (GameManager::GetInstance().enemies_turn())
+	{
+		return;
+	}
+
+	if (
+		move_start_time_ > 0 &&
+		move_timer_.start_time() + move_timer_.GetElapsedTime() - move_start_time_ < 100.0f
+	)
+	{
+		// delaying movement
+		return;
+	}
+	else
+	{
+		move_start_time_ = 0;
+	}
+
+	if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_W))
+	{
+		Move({ 0, 1 });
+	}
+	else if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_S))
+	{
+		Move({ 0, -1 });
+	}
+	else if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_A))
+	{
+		Move({ -1, 0 });
+	}
+	else if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_D))
+	{
+		Move({ 1, 0 });
+	}
+}
+
+void Player::Move(glm::vec2 step)
+{
+	move_start_time_ = move_timer_.GetCurrentTime();
+	Level *level = GameManager::GetInstance().level();
+	assert(level != nullptr);
+
+	glm::vec2 current_position = level->GetGameObjectPositionById(id());
+	glm::vec2 desirable_position = current_position + step;
+	std::vector<GameObject *> game_objects = level->map()[desirable_position.x][desirable_position.y];
+
+	bool can_move = true;
+
+	for (auto game_object : game_objects)
+	{
+		if (game_object->name() == "Wall" || game_object->name() == "Enemy")
+		{
+			can_move = false;
+			break;
+		}
+	}
+
+	if (can_move)
+	{
+		level->SetGameObjectPositionById(id(), desirable_position);
+		// TODO: add consumables and exit logic
+		// TODO: make enemies turn
+	}
 }
