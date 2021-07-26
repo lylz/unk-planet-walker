@@ -37,12 +37,6 @@ Enemy::~Enemy()
 
 void Enemy::OnUpdate()
 {
-	/*if (GameManager::GetInstance().enemies_turn())
-	{
-		printf("Enemy does his turn. \n");
-		GameManager::GetInstance().FinishEnemiesTurn();
-	}*/
-
 	material_->SetViewMatrix(Camera::GetInstance().view_matrix());
 	material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
 }
