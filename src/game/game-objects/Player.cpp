@@ -59,14 +59,9 @@ void Player::OnUpdate()
 
 void Player::Update()
 {
-	if (GameManager::GetInstance().enemies_turn())
-	{
-		return;
-	}
-
 	if (
 		move_start_time_ > 0 &&
-		move_timer_.start_time() + move_timer_.GetElapsedTime() - move_start_time_ < 100.0f
+		move_timer_.start_time() + move_timer_.GetElapsedTime() - move_start_time_ < 150.0f
 	)
 	{
 		// delaying movement
