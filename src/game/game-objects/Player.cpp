@@ -6,12 +6,15 @@
 #include "../../application/InputManager.h"
 #include "../../renderer/Camera.h"
 #include "../GameManager.h"
+#include "../Utils.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Player::Player()
+Player::Player(glm::vec2 position)
 {
 	name_ = "Player";
+    render_type_ = RenderType::DYNAMIC;
+    position_ = position;
 
 	Shader *shader = ShaderManager::GetInstance().Get("DynamicObject");
 	
@@ -46,11 +49,7 @@ void Player::OnUpdate()
 {
 	Update();
 
-	Level *level = GameManager::GetInstance().level();
-	assert(level != nullptr);
-
-	glm::vec2 map_position = level->GetGameObjectPositionById(id());
-	glm::vec3 position = level->CalculateInWorldPosition(map_position.x, map_position.y);
+	glm::vec3 position = CalculateInWorldPositionFromMapPosition(position_);
 
 	material_->SetModelMatrix(glm::translate(glm::mat4(1), position));
 	material_->SetViewMatrix(Camera::GetInstance().view_matrix());
@@ -96,25 +95,47 @@ void Player::Move(glm::vec2 step)
 	Level *level = GameManager::GetInstance().level();
 	assert(level != nullptr);
 
-	glm::vec2 current_position = level->GetGameObjectPositionById(id());
-	glm::vec2 desirable_position = current_position + step;
-	std::vector<GameObject *> game_objects = level->map()[desirable_position.x][desirable_position.y];
+	glm::vec2 desirable_position = position_ + step;
+    std::vector<GameObject *> game_objects = level->GetGameObjectsAtPosition(desirable_position);
+    bool can_move = true;
 
-	bool can_move = true;
+    for (auto game_object: game_objects)
+    {
+        assert(game_object != nullptr);
 
-	for (auto game_object : game_objects)
-	{
-		if (game_object->name() == "Wall" || game_object->name() == "Enemy")
-		{
-			can_move = false;
-			break;
-		}
-	}
+        if (game_object->name() == "Wall" || game_object->name() == "Enemy")
+        {
+            can_move = false;
+            break;
+        }
+    }
 
-	if (can_move)
-	{
-		level->SetGameObjectPositionById(id(), desirable_position);
-		// TODO: add consumables and exit logic
-		// TODO: make enemies turn
-	}
+    if (can_move)
+    {
+        position_ = desirable_position;
+        GameManager::GetInstance().DescreasePlayerStats();
+
+
+        for (auto game_object : game_objects)
+        {
+            // TODO: exit logic
+            if (game_object->name() == "OxygenCan")
+            {
+                GameManager::GetInstance().ConsumeOxygenCan();
+                level->DestroyGameObjectById(game_object->id());
+            }
+            else if (game_object->name() == "HealthPouch")
+            {
+                GameManager::GetInstance().ConsumeHealthPouch();
+                level->DestroyGameObjectById(game_object->id());
+            }
+        }
+    }
+
+    GameObject *enemy = level->GetGameObjectByName("Enemy");
+
+    if (enemy != nullptr)
+    {
+        dynamic_cast<Enemy *>(enemy)->TakeTurn();
+    }
 }

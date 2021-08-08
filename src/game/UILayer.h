@@ -8,6 +8,7 @@
 #include "../renderer/materials/default/TextureHolderMaterial.h"
 #include "../renderer/Camera.h"
 #include "../renderer/font/FontLoader.h"
+#include "../renderer/font/FontManager.h"
 #include "../renderer/ui/Text.h"
 
 class UILayer : public Layer
@@ -18,7 +19,7 @@ private:
 	Shader *shader_;
 	UIMaterial *material_;
 
-	Text *text_;
+	PlayerStats last_player_stats_;
 
 public:
 	~UILayer()
@@ -31,14 +32,15 @@ public:
 	void Init()
 	{
 		SetVisible(true);
-		Font font = FontLoader::Load("assets/fonts/m6x11.ttf");
-		text_ = new Text("Hey, Jimmy, grghh...", font);
+		Font font = FontLoader::Load("PixelFont", "assets/fonts/m6x11.ttf");
+		FontManager::GetInstance().Add(font);
+		Text text = Text("UnkPlanetWalker v0.1.0", font);
 
 		shader_ = Shader::CreateFromFiles("UI", "src/renderer/shaders/default/ui.vert", "src/renderer/shaders/default/ui.frag");
 		material_ = new UIMaterial(shader_);
 		renderer_ = new BatchRenderer(material_);
 
-		for (auto mesh : text_->meshes())
+		for (auto mesh : text.meshes())
 		{
 			renderer_->Submit(mesh);
 		}
@@ -49,6 +51,28 @@ public:
 		if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_U))
 		{
 			SetVisible(!visible_);
+		}
+
+		PlayerStats *player_stats = GameManager::GetInstance().player_stats();
+
+		// NOTE: last_player_stats_ is used to minimize the time of text updates
+		if (
+			last_player_stats_.hp != player_stats->hp ||
+			last_player_stats_.oxygen != player_stats->oxygen
+			)
+		{
+			std::string stats = "HP: " + std::to_string(player_stats->hp) + " | O2: " + std::to_string(player_stats->oxygen);
+			Font font = FontManager::GetInstance().Get("PixelFont");
+			Text text = Text(stats, font);
+
+			renderer_->Flush();
+
+			for (auto mesh : text.meshes())
+			{
+				renderer_->Submit(mesh);
+			}
+
+			last_player_stats_ = *player_stats;
 		}
 	}
 

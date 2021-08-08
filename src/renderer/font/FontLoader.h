@@ -6,6 +6,6 @@
 class FontLoader
 {
 public:
-	static Font Load(std::string file_path);
+	static Font Load(std::string font_name, std::string file_path);
 };
 

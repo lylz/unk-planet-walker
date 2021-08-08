@@ -1,5 +1,7 @@
 #include "Mesh.h"
 
+#include "../utils/IdentifierManager.h"
+
 Mesh::Mesh(
 	std::vector<Vertex> vertices,
 	std::vector<unsigned int> indices,
@@ -7,8 +9,14 @@ Mesh::Mesh(
 )
 	: vertices_(vertices),
 	indices_(indices),
-	material_(material)
+    material_(material),
+    id_(IdentifierManager::GetInstance().GetNewIdentifier())
 {}
+
+unsigned int Mesh::id()
+{
+    return id_;
+}
 
 Material* Mesh::material()
 {

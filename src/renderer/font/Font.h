@@ -14,6 +14,7 @@ struct GlyphInfo
 
 struct Font
 {
+	std::string name;
 	int size;
 	std::unordered_map<char, GlyphInfo> glyphs;
 	std::string atlas_path;

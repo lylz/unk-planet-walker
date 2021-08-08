@@ -1,15 +1,17 @@
 #pragma once
 
-#include "Consumable.h"
-#include "../../renderer/materials/default/TextureHolderMaterial.h"
+#include "../GameObject.h"
+#include "../../renderer/materials/default/DynamicObjectMaterial.h"
 
-class OxygenCan: public Consumable
+class OxygenCan: public GameObject
 {
 public:
-	OxygenCan(glm::vec3 position);
+	OxygenCan(glm::vec2 position);
 	~OxygenCan();
 
+    void OnUpdate();
+
 private:
-	TextureHolderMaterial *material_;
+	DynamicObjectMaterial *material_;
 };
 

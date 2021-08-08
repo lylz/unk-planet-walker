@@ -7,7 +7,7 @@
 class Player: public GameObject
 {
 public:
-	Player();
+	Player(glm::vec2 position);
 	~Player();
 
 	void OnUpdate();

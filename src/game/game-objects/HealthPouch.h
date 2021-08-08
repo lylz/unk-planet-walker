@@ -1,15 +1,17 @@
 #pragma once
 
-#include "Consumable.h"
-#include "../../renderer/materials/default/TextureHolderMaterial.h"
+#include "../GameObject.h"
+#include "../../renderer/materials/default/DynamicObjectMaterial.h"
 
-class HealthPouch: public Consumable
+class HealthPouch: public GameObject
 {
 public:
-	HealthPouch(glm::vec3 position);
+	HealthPouch(glm::vec2 position);
 	~HealthPouch();
 
+    void OnUpdate();
+
 private:
-	TextureHolderMaterial *material_;
+	DynamicObjectMaterial *material_;
 };
 

@@ -33,8 +33,6 @@ public:
 
 		visible_ = true;
 		Camera::GetInstance().position.z = 60;
-		
-		// TODO: add all the logic from MapLayer and SceneLayer here
 	}
 
 	~GameLayer()
@@ -60,27 +58,49 @@ public:
 		ShaderManager::GetInstance().Add(Shader::CreateFromFiles("DynamicObject", "src/renderer/shaders/default/dynamic_object.vert", "src/renderer/shaders/default/dynamic_object.frag"));
 		TextureManager::GetInstance().Add(new Texture("PlanetWalker", "assets/PlanetWalker.png"));
 		TextureManager::GetInstance().Add(new Texture("Enemy", "assets/Enemy.png"));
+        TextureManager::GetInstance().Add(new Texture("OxygenCan", "assets/OxygenCan.png"));
+        TextureManager::GetInstance().Add(new Texture("HealthPouch", "assets/HealthPouch.png"));
 
 		GameManager::GetInstance().GenerateLevel();
 		Level *level = GameManager::GetInstance().level();
 		assert(level != nullptr);
 
+        level->SetGameObjectsBeforeDestroyCallback(this, GameObjectsBeforeDestroyCallbackStatic);
+
 		// TODO: get world position of camera using level methods
-		Camera::GetInstance().position.x = (level->map().size() / 2 * 4.0f) - 2.0f;
-		Camera::GetInstance().position.y = (level->map().size() / 2 * 4.0f) - 2.0f;
+        // TODO: if the map size will be odd number it will cause an incorrect behaviour
+		Camera::GetInstance().position.x = (level->map_size() / 2 * 4.0f) - 2.0f;
+		Camera::GetInstance().position.y = (level->map_size() / 2 * 4.0f) - 2.0f;
 
 		batch_renderer_->Flush();
-		for (auto game_object : level->static_game_objects())
-		{
-			batch_renderer_->Submit(game_object->mesh());
-		}
-
 		renderer_->Flush();
-		for (auto game_object : level->dynamic_game_objects())
+
+		for (auto game_object : level->game_objects())
 		{
-			renderer_->Submit(game_object->mesh());
+            switch (game_object->render_type())
+            {
+            case RenderType::STATIC:
+                batch_renderer_->Submit(game_object->mesh());
+                break;
+            case RenderType::DYNAMIC:
+                renderer_->Submit(game_object->mesh());
+                break;
+            }
 		}
 	}
+
+    static void GameObjectsBeforeDestroyCallbackStatic(void *context, GameObject *game_object)
+    {
+        GameLayer *game_layer = static_cast<GameLayer*>(context);
+
+        game_layer->GameObjectsBeforeDestroyCallback(game_object);
+    }
+
+    void GameObjectsBeforeDestroyCallback(GameObject *game_object)
+    {
+        assert(game_object != nullptr);
+        renderer_->RemoveMeshById(game_object->mesh()->id());
+    }
 
 	void OnUpdate()
 	{
@@ -88,7 +108,7 @@ public:
 		batch_material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
 		
 		Level *level = GameManager::GetInstance().level();
-		for (auto game_object : level->dynamic_game_objects())
+		for (auto game_object : level->game_objects())
 		{
 			game_object->OnUpdate();
 		}

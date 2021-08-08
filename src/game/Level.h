@@ -17,24 +17,32 @@ public:
 	Level(unsigned int size);
 	~Level();
 
-	std::vector<std::vector<std::vector<GameObject *>>> map();
-	std::vector<GameObject *> static_game_objects();
-	std::vector<GameObject *> dynamic_game_objects();
+    unsigned int map_size();
+	std::vector<GameObject *> game_objects();
 
-	glm::vec3 CalculateInWorldPosition(unsigned int map_x, unsigned int map_y);
 	glm::vec2 GetGameObjectPositionById(unsigned int id);
-	void SetGameObjectPositionById(unsigned int id, glm::vec2 position);
+    std::vector<GameObject *> GetGameObjectsAtPosition(glm::vec2 position);
+    GameObject *GetGameObjectByName(const std::string &name);
+	glm::vec3 CalculateInWorldPosition(unsigned int map_x, unsigned int map_y);
+
+    void SetGameObjectsBeforeDestroyCallback(void *context, void (*callback) (void *, GameObject *));
+    void DestroyGameObjectById(unsigned int id);
 
 private:
-	std::vector<std::vector<std::vector<GameObject *>>> map_;
-	std::vector<GameObject *> static_game_objects_;
-	std::vector<GameObject *> dynamic_game_objects_;
+    unsigned int map_size_;
+    std::vector<GameObject *> game_objects_;
 
+    // TODO: make a list of callbacks, so that I can use the callback in different places simultaniously
+    void (*game_objects_before_destroy_callback_) (void *, GameObject *);
+    void *game_objects_before_destroy_callback_context_;
+
+private:
 	void PlacePlayer();
 	void PlaceEnemy();
 	void PlaceWalls();
 	void PlaceObstacles();
 	void PlacePassages();
 	void PlaceConsumables();
+
 };
 

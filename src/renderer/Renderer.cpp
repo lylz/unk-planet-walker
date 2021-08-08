@@ -7,7 +7,7 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-	renderables_.clear();
+	Flush();
 
 	delete default_shader_;
 }
@@ -18,8 +18,28 @@ void Renderer::Submit(Mesh *mesh)
 	renderables_.push_back(renderable);
 }
 
+void Renderer::RemoveMeshById(unsigned int id)
+{
+    for (unsigned int i = 0; i < renderables_.size(); i++)
+    {
+        Renderable *renderable = renderables_[i];
+
+        if (renderable->mesh()->id() == id)
+        {
+            delete renderable;
+            renderables_.erase(renderables_.begin() + i);
+            break;
+        }
+    }
+}
+
 void Renderer::Flush()
 {
+    for (unsigned int i = 0; i < renderables_.size(); i++)
+    {
+        delete renderables_[i];
+    }
+
 	renderables_.clear();
 }
 

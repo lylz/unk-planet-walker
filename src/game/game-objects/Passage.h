@@ -12,7 +12,7 @@ enum class PassageType
 class Passage: public GameObject
 {
 public:
-	Passage(PassageType type, glm::vec3 position);
+	Passage(PassageType type, glm::vec2 position);
 	~Passage();
 
 	void OnUpdate();

@@ -2,10 +2,13 @@
 
 #include "../../renderer/TextureManager.h"
 #include "../../renderer/MeshFactory.h"
+#include "../Utils.h"
 
-Wall::Wall(WallType type, glm::vec3 position)
+Wall::Wall(WallType type, glm::vec2 position)
 {
 	name_ = "Wall";
+    render_type_ = RenderType::STATIC;
+    position_ = position;
 
 	const char *sprite_name;
 
@@ -31,7 +34,7 @@ Wall::Wall(WallType type, glm::vec3 position)
 	mesh_ = MeshFactory::CreateQuad(
 		sprite_info.size * scale,
 		sprite_info.uv,
-		position,
+		CalculateInWorldPositionFromMapPosition(position_),
 		material_
 	);
 }

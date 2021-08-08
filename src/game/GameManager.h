@@ -3,6 +3,12 @@
 #include <glm/glm.hpp>
 #include "Level.h"
 
+struct PlayerStats
+{
+	int hp;
+	int oxygen;
+};
+
 // TODO: implement start stop mechanism
 // TODO: maybe level shoudn't be a pointer
 class GameManager
@@ -14,13 +20,22 @@ public:
 	void operator=(const GameManager &) = delete;
 
 	void GenerateLevel();
+    void ConsumeHealthPouch();
+    void ConsumeOxygenCan();
+	void DescreasePlayerStats();
 
+	PlayerStats *player_stats();
 	Level *level();
 	
 private:
 	GameManager();
 	~GameManager();
 
+    const unsigned int DEPLETE_AMOUNT = 50;
+    const unsigned int HEALTH_POUCH_POINTS = 50;
+    const unsigned int OXYGEN_CAN_POINTS = 50;
+
 	Level *level_;
+	PlayerStats *player_stats_;
 };
 

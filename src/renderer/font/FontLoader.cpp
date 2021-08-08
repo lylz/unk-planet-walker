@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <iostream>
 
-Font FontLoader::Load(std::string file_path)
+Font FontLoader::Load(std::string font_name, std::string file_path)
 {
     struct stat file_info;
 
@@ -97,6 +97,7 @@ Font FontLoader::Load(std::string file_path)
 
     font.atlas_path = atlas_path;
     font.atlas_size = glm::ivec2(texture_width, texture_height);
+    font.name = font_name;
 
     free(atlas_data);
     free(pixels);

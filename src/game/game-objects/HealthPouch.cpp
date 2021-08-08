@@ -2,23 +2,42 @@
 
 #include "../../renderer/TextureManager.h"
 #include "../../renderer/MeshFactory.h"
+#include "../../renderer/shaders/ShaderManager.h"
+#include "../../renderer/Camera.h"
+#include "../Utils.h"
 
-HealthPouch::HealthPouch(glm::vec3 position)
+HealthPouch::HealthPouch(glm::vec2 position)
 {
 	name_ = "HealthPouch";
+    render_type_ = RenderType::DYNAMIC;
+    position_ = position;
 
-	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
+    Shader *shader = ShaderManager::GetInstance().Get("DynamicObject");
+
+	if (shader == nullptr)
+	{
+		throw std::runtime_error("ERROR: Enemy cannot aquare required shader resource!\n");
+	}
+
+	Texture *texture = TextureManager::GetInstance().Get("HealthPouch");
 	assert(texture != nullptr);
-	SpriteInfo sprite_info = texture->GetSpriteInfo("HealthPouch");
 
 	float scale = 0.125f;
-	material_ = new TextureHolderMaterial(texture);
+	material_ = new DynamicObjectMaterial(shader, texture);
 	mesh_ = MeshFactory::CreateQuad(
-		sprite_info.size * scale,
-		sprite_info.uv,
-		position,
+        { texture->width() * scale, texture->height() * scale },
+		glm::vec3(0),
 		material_
 	);
+}
+
+void HealthPouch::OnUpdate()
+{
+	glm::vec3 position = CalculateInWorldPositionFromMapPosition(position_);
+
+	material_->SetModelMatrix(glm::translate(glm::mat4(1), position));
+	material_->SetViewMatrix(Camera::GetInstance().view_matrix());
+	material_->SetProjectionMatrix(Camera::GetInstance().projection_matrix());
 }
 
 HealthPouch::~HealthPouch()

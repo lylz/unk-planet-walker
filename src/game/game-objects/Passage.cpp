@@ -2,10 +2,13 @@
 
 #include "../../renderer/TextureManager.h"
 #include "../../renderer/MeshFactory.h"
+#include "../Utils.h"
 
-Passage::Passage(PassageType type, glm::vec3 position)
+Passage::Passage(PassageType type, glm::vec2 position)
 {
 	name_ = "Passage";
+    render_type_ = RenderType::STATIC;
+    position_ = position;
 
 	Texture *texture = TextureManager::GetInstance().Get("MapAtlas");
 	assert(texture != nullptr);
@@ -16,7 +19,7 @@ Passage::Passage(PassageType type, glm::vec3 position)
 	mesh_ = MeshFactory::CreateQuad(
 		sprite_info.size * scale,
 		sprite_info.uv,
-		position,
+		CalculateInWorldPositionFromMapPosition(position_),
 		material_
 	);
 }

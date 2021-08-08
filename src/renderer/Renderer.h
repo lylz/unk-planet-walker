@@ -12,6 +12,7 @@ public:
 	~Renderer();
 
 	void Submit(Mesh *mesh);
+    void RemoveMeshById(unsigned int id);
 	void Prepare();
 	void Render();
 	void Flush();

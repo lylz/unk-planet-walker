@@ -13,7 +13,7 @@ enum class WallType
 class Wall: public GameObject
 {
 public:
-	Wall(WallType type, glm::vec3 position);
+	Wall(WallType type, glm::vec2 position);
 	~Wall();
 
 	void OnUpdate();

@@ -3,150 +3,154 @@
 
 Level::Level(unsigned int size)
 {
-	map_.resize(size);
+	map_size_ = size;
 
-	for (unsigned int i = 0; i < size; i++)
-	{
-		map_[i].resize(size);
-	}
-
+    // NOTE: should place Consumables first in order for them to be rendered first
+    // so that Player will be displayed on top of them.
+    // Maybe add some texture order sort mechanicsm in the future.
+	PlaceConsumables();
 	PlacePlayer();
 	PlaceEnemy();
 	PlaceWalls();
 	PlaceObstacles();
 	PlacePassages();
-	PlaceConsumables();
 }
 
 Level::~Level()
 {
-	for (unsigned int i = 0; i < map_.size(); i++)
-	{
-		for (unsigned int j = 0; j < map_[i].size(); j++)
-		{
-			for (unsigned int k = 0; k < map_[i][j].size(); k++)
-			{
-				delete map_[i][j][k];
-			}
-		}
-	}
+    for (unsigned int i = 0; i < game_objects_.size(); i++)
+    {
+        delete game_objects_[i];
+    }
 
-	static_game_objects_.clear();
-	dynamic_game_objects_.clear();
+    game_objects_.clear();
 }
 
-std::vector<std::vector<std::vector<GameObject *>>> Level::map()
+std::vector<GameObject *> Level::game_objects()
 {
-	return map_;
+    return game_objects_;
 }
 
-std::vector<GameObject *> Level::static_game_objects()
+void Level::SetGameObjectsBeforeDestroyCallback(void *context, void (*callback) (void *, GameObject *))
 {
-	return static_game_objects_;
+    game_objects_before_destroy_callback_ = callback;
+    game_objects_before_destroy_callback_context_ = context;
 }
 
-std::vector<GameObject *> Level::dynamic_game_objects()
+void Level::DestroyGameObjectById(unsigned int id)
 {
-	return dynamic_game_objects_;
+    GameObject *game_object = nullptr;
+
+    for (unsigned int i = 0; i < game_objects_.size(); i++)
+    {
+        if (game_objects_[i]->id() == id)
+        {
+            game_object = game_objects_[i];
+            break;
+        }
+    }
+
+    assert(game_object != nullptr); // TODO: make proper check
+
+    if (
+        game_objects_before_destroy_callback_ != nullptr &&
+        game_objects_before_destroy_callback_context_ != nullptr
+    )
+    {
+        // TODO: giving the pointer outside, check it here and everywhere else
+        game_objects_before_destroy_callback_(
+            game_objects_before_destroy_callback_context_,
+            game_object
+        );
+    }
+
+    for (unsigned int i = 0; i < game_objects_.size(); i++)
+    {
+        if (game_objects_[i]->id() == game_object->id())
+        {
+            game_objects_.erase(game_objects_.begin() + i);
+        }
+    }
+
+    delete game_object;
 }
 
-glm::vec2 Level::GetGameObjectPositionById(unsigned int id)
+std::vector<GameObject *> Level::GetGameObjectsAtPosition(glm::vec2 position)
 {
-	for (unsigned int i = 0; i < map_.size(); i++)
-	{
-		for (unsigned int j = 0; j < map_[i].size(); j++)
-		{
-			for (unsigned int k = 0; k < map_[i][j].size(); k++)
-			{
-				GameObject *game_object = map_[i][j][k];
+    std::vector<GameObject *> game_objects;
 
-				if (game_object != nullptr && game_object->id() == id)
-				{
-					return glm::vec2(i, j);
-				}
-			}
-		}
-	}
+    for (auto game_object : game_objects_)
+    {
+        if (game_object->position() == position)
+        {
+            game_objects.push_back(game_object);
+        }
+    }
+
+    return game_objects;
 }
 
-void Level::SetGameObjectPositionById(unsigned int id, glm::vec2 position)
+unsigned int Level::map_size()
 {
-	glm::vec2 game_object_position = GetGameObjectPositionById(id);
-	std::vector<GameObject *> game_objects = map_[game_object_position.x][game_object_position.y];
-
-	GameObject *game_object = nullptr;
-
-	for (unsigned int i = 0; i < game_objects.size(); i++)
-	{
-		if (game_objects[i]->id() == id)
-		{
-			game_object = game_objects[i];
-			// TODO: check it
-			map_[game_object_position.x][game_object_position.y].erase(map_[game_object_position.x][game_object_position.y].begin() + i);
-			break;
-		}
-	}
-
-	assert(game_object != nullptr);
-
-	map_[position.x][position.y].push_back(game_object);
+    return map_size_;
 }
 
-glm::vec3 Level::CalculateInWorldPosition(unsigned int map_x, unsigned int map_y)
+// NOTE: returns only the first GameObject found
+GameObject *Level::GetGameObjectByName(const std::string &name)
 {
-	float world_coordinate_multiplier = 4.0f;
-
-	return glm::vec3(map_x, map_y, 0) * world_coordinate_multiplier;
+    for (auto game_object : game_objects_)
+    {
+        if (game_object->name() == name)
+        {
+            return game_object;
+        }
+    }
 }
 
 void Level::PlaceObstacles()
 {
-	Wall *obstacle = new Wall(WallType::TOPDOWN, CalculateInWorldPosition(7, 7));
+	Wall *obstacle = new Wall(WallType::TOPDOWN, { 7, 7 });
 
-	map_[7][7].push_back(obstacle);
-	static_game_objects_.push_back(obstacle);
+    game_objects_.push_back(obstacle);
 }
 
 void Level::PlacePlayer()
 {
-	Player *player = new Player();
+	Player *player = new Player({ 1, 1 });
 
-	map_[1][1].push_back(player);
-	dynamic_game_objects_.push_back(player);
+    game_objects_.push_back(player);
 }
 
 void Level::PlaceEnemy()
 {
-	Enemy *enemy = new Enemy(CalculateInWorldPosition(4, 4));
+	Enemy *enemy = new Enemy({ 4, 4 });
 
-	map_[4][4].push_back(enemy);
-	dynamic_game_objects_.push_back(enemy);
+    game_objects_.push_back(enemy);
 }
 
 void Level::PlaceWalls()
 {
-	for (unsigned int i = 0; i < map_.size(); i++)
+	for (unsigned int i = 0; i < map_size_; i++)
 	{
-		for (unsigned int j = 0; j < map_.size(); j++)
+		for (unsigned int j = 0; j < map_size_; j++)
 		{
-			if (i == 0 || i == map_.size() - 1 || j == 0 || j == map_.size() - 1)
+			if (i == 0 || i == map_size_ - 1 || j == 0 || j == map_size_ - 1)
 			{
 				Wall *wall = nullptr;
 
-				glm::vec3 position = CalculateInWorldPosition(i, j);
+				glm::vec2 position = { i, j };
 
-				if (i == 0 || i == map_.size() - 1)
+				if (i == 0 || i == map_size_ - 1)
 				{
 					wall = new Wall(WallType::LEFT_SIDE, position);
 				}
-				else if (j == 0 || j == map_.size() - 1) {
+				else if (j == 0 || j == map_size_ - 1) {
 					wall = new Wall(WallType::TOPDOWN, position);
 				}
 
 				if (wall != nullptr)
 				{
-					map_[i][j].push_back(wall);
-					static_game_objects_.push_back(wall);
+                    game_objects_.push_back(wall);
 				}
 			}
 		}
@@ -155,23 +159,20 @@ void Level::PlaceWalls()
 
 void Level::PlacePassages()
 {
-	Passage *entrance = new Passage(PassageType::ENTRANCE, CalculateInWorldPosition(1, 1));
-	Passage *exit = new Passage(PassageType::EXIT, CalculateInWorldPosition(map_.size() - 2, map_.size() - 2));
+	Passage *entrance = new Passage(PassageType::ENTRANCE, { 1, 1 });
+	Passage *exit = new Passage(PassageType::EXIT, { map_size_ - 2, map_size_ - 2 });
 
-	map_[1][1].push_back(entrance);
-	static_game_objects_.push_back(entrance);
-	map_[map_.size() - 2][map_.size() - 2].push_back(exit);
-	static_game_objects_.push_back(exit);
+    // NOTE: we don't need an entrance on the map, because it is not used in game logic at all
+    game_objects_.push_back(exit);
+    game_objects_.push_back(entrance);
 }
 
 void Level::PlaceConsumables()
 {
-	HealthPouch *health_pouch = new HealthPouch(CalculateInWorldPosition(2, 2));
-	OxygenCan *oxygen_can = new OxygenCan(CalculateInWorldPosition(5, 5));
+	HealthPouch *health_pouch = new HealthPouch({ 2, 2 });
+	OxygenCan *oxygen_can = new OxygenCan({ 5, 5 });
 
-	map_[2][2].push_back(health_pouch);
-	static_game_objects_.push_back(health_pouch);
-	map_[5][5].push_back(oxygen_can);
-	static_game_objects_.push_back(oxygen_can);
+    game_objects_.push_back(health_pouch);
+    game_objects_.push_back(oxygen_can);
 }
 
