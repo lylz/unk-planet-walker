@@ -5,7 +5,7 @@ UIMaterial::UIMaterial(Shader *shader)
 	: BatchMaterial(shader)
 {
     // TODO: get width and height from ApplicationSettings
-	orthographic_matrix_ = glm::ortho(0.0f, 720.0f, 1024.0f, 0.0f, -1.0f, 1.0f);
+	orthographic_matrix_ = glm::ortho(0.0f, 1024.0f, 0.0f, 720.0f, -1.0f, 1.0f);
 };
 
 void UIMaterial::Bind()

@@ -61,7 +61,7 @@ public:
 			std::string stats = "HP: " + std::to_string(player_stats->hp) + " | O2: " + std::to_string(player_stats->oxygen);
 			Font font = FontManager::GetInstance().Get("PixelFont");
             Text title = Text("UnkPlanetWalker v0.1.0", font, { 20, 20 });
-			Text text = Text(stats, font, { 20, 40 });
+			Text text = Text(stats, font, { 20, 680 });
             
             renderer_->Flush();
 

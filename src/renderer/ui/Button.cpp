@@ -22,17 +22,6 @@ Button::Button(const std::string &text, glm::vec2 screen_position)
         batch_renderer_->Submit(mesh);
     }
 
-    // TODOLIST:
-    /*
-     * 1. create a rectangle mesh
-     * 2. put the mesh on the screen using the screen_position provided
-     * 3. put the text in the position so that the text is inside of the mesh in the middle of it
-     * 4. write cursor logic, so that by default the cursor is on the first button in the menu.
-     * user can move between the menu options using WASD or ARROW keys (cursor moves accordingly).
-     * when the cursor is on the menu option this rectangle mesh should change the color, making a hover effect visible.
-     * 5. add corresponding logic to the menu options (e.g. "Restart Level", "Credits" or "Exit")
-     */
-
     glm::vec3 button_position = { screen_position.x, screen_position.y, 0 };
     glm::vec4 button_color = { 255, 255, 255, 1 };
 

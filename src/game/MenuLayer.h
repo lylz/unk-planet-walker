@@ -46,7 +46,7 @@ class MenuLayer : public Layer
         Shader *ui_button_shader = Shader::CreateFromFiles("UIButton", "src/renderer/shaders/default/ui_button.vert", "src/renderer/shaders/default/ui_button.frag");
         ShaderManager::GetInstance().Add(ui_button_shader);
 
-        button_ = new Button("button", { 500, 500 });
+        button_ = new Button("button", { 512, 360 });
     }
 
     void OnUpdate()

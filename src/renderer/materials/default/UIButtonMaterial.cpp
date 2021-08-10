@@ -5,7 +5,7 @@ UIButtonMaterial::UIButtonMaterial(Shader *shader)
     :Material(shader, nullptr)
 {
     // TODO: get width and height from ApplicationSettings
-	orthographic_matrix_ = glm::ortho(0.0f, 720.0f, 1024.0f, 0.0f, -1.0f, 1.0f);
+	orthographic_matrix_ = glm::ortho(0.0f, 1024.0f, 0.0f, 720.0f, -1.0f, 1.0f);
     color_ = { 255, 255, 255, 1 };
 }
 
