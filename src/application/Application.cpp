@@ -6,6 +6,8 @@ Application::Application(std::string name, int width, int height)
 {
 	window_ = new Window(name_.c_str(), width_, height_);
 
+    application_settings_ = new ApplicationSettings(width_, height_);
+
 	GLenum err = glewInit();
 
 	if (err != GLEW_OK)
@@ -42,6 +44,11 @@ void Application::RemoveLayer(Layer *layer)
 			break;
 		}
 	}
+}
+
+ApplicationSettings *Application::application_settings()
+{
+    return application_settings_;
 }
 
 void Application::MainLoop()

@@ -6,7 +6,7 @@
 class Text
 {
 public:
-	Text(std::string text, Font font);
+	Text(std::string text, Font font, glm::vec2 screen_position);
 	~Text();
 
 	std::vector<Mesh *> meshes();
@@ -17,7 +17,8 @@ private:
 	Texture *font_atlas_texture_;
 	Material *material_;
 	std::vector<Mesh *> meshes_;
-	float x_, y_;
+    float x_;
+    float y_;
 
 	void GenerateCharMesh(char c);
 };

@@ -32,3 +32,4 @@ std::vector<unsigned int> Mesh::indices()
 {
 	return indices_;
 }
+

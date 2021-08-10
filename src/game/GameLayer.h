@@ -24,7 +24,8 @@ private:
 	StaticObjectsMaterial *batch_material_;
 
 public:
-	GameLayer()
+	GameLayer(ApplicationSettings *application_settings)
+        : Layer(application_settings)
 	{
 		renderer_ = nullptr;
 		batch_renderer_ = nullptr;

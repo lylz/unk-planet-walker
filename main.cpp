@@ -6,6 +6,7 @@
 #include "src/game/GameManager.h"
 #include "src/game/GameLayer.h"
 #include "src/game/UILayer.h"
+#include "src/game/MenuLayer.h"
 
 class UnkPlanetWalkerApplication : public Application
 {
@@ -17,8 +18,9 @@ public:
 protected:
 	void OnInit()
 	{
-		AddLayer(new GameLayer);
-		AddLayer(new UILayer);
+		AddLayer(new GameLayer(application_settings()));
+		AddLayer(new UILayer(application_settings()));
+        AddLayer(new MenuLayer(application_settings()));
 	}
 };
 

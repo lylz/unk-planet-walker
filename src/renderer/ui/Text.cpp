@@ -1,14 +1,14 @@
 #include "Text.h"
 #include "../materials/default/TextureHolderMaterial.h"
 
-Text::Text(std::string text, Font font)
+Text::Text(std::string text, Font font, glm::vec2 screen_position)
 	: text_(text), font_(font)
 {
 	font_atlas_texture_ = new Texture("INTERNAL_Font", font_.atlas_path.c_str());
 	material_ = new TextureHolderMaterial(font_atlas_texture_);
 
-	x_ = 20;
-	y_ = 20;
+    x_ = screen_position.x;
+    y_ = screen_position.y;
 	
 	for (auto c : text_)
 	{
@@ -19,6 +19,7 @@ Text::Text(std::string text, Font font)
 Text::~Text()
 {
 	meshes_.clear();
+    // TODO: check if I need to delete material_
 }
 
 void Text::GenerateCharMesh(char c)

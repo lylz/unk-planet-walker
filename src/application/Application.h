@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../utils/GLIncludes.h"
+#include "ApplicationSettings.h"
 #include "Window.h"
 #include "Layer.h"
 
@@ -17,6 +18,7 @@ public:
 	void Run();
 	void AddLayer(Layer *layer);
 	void RemoveLayer(Layer *layer);
+    ApplicationSettings *application_settings();
 
 private:
 	std::string name_;
@@ -25,6 +27,8 @@ private:
 
 	Window *window_;
 	std::vector<Layer*> layers_;
+
+    ApplicationSettings *application_settings_;
 
 	void MainLoop();
 
