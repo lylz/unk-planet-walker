@@ -1,5 +1,4 @@
 #include "UIButtonMaterial.h"
-#include <glm/gtc/matrix_transform.hpp>
 
 UIButtonMaterial::UIButtonMaterial(Shader *shader)
     :Material(shader, nullptr)
