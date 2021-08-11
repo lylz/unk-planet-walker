@@ -13,7 +13,8 @@
 class MenuLayer : public Layer
 {
  private:
-    Button *button_;
+    std::vector<Button *> buttons_;
+    unsigned int cursor_position_ = 0;
 
  public:
     MenuLayer(ApplicationSettings *application_settings)
@@ -21,7 +22,12 @@ class MenuLayer : public Layer
 
     ~MenuLayer()
     {
-        delete button_;
+        for (auto button: buttons_)
+        {
+            delete button;
+        }
+
+        buttons_.clear();
     }
 
     void Init()
@@ -46,7 +52,10 @@ class MenuLayer : public Layer
         Shader *ui_button_shader = Shader::CreateFromFiles("UIButton", "src/renderer/shaders/default/ui_button.vert", "src/renderer/shaders/default/ui_button.frag");
         ShaderManager::GetInstance().Add(ui_button_shader);
 
-        button_ = new Button("button", { 512, 360 });
+        Button *restart_button = new Button("RESTART LEVEL", { 512, 360 });
+        buttons_.push_back(restart_button);
+        // TODO: change the way the positioning is calculated
+        buttons_.push_back(new Button("QUIT", { 512, 360 - restart_button->height() - 20 }));
     }
 
     void OnUpdate()
@@ -58,9 +67,39 @@ class MenuLayer : public Layer
 
         if (visible())
         {
-            if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_C))
+            if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_W))
             {
-                button_->ChangeColor({ 0.5, 0.5, 0.5, 1 });
+                if ((int) cursor_position_ - 1 < 0)
+                {
+                    cursor_position_ = 0;
+                }
+                else
+                {
+                    cursor_position_ -= 1;
+                }
+            }
+            else if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_S))
+            {
+                if (cursor_position_ + 1 > buttons_.size() - 1)
+                {
+                    cursor_position_ = buttons_.size() - 1;
+                }
+                else
+                {
+                    cursor_position_ += 1;
+                }
+            }
+
+            for (unsigned int i = 0; i < buttons_.size(); i++)
+            {
+                glm::vec4 color = { 0.3, 0.3, 0.3, 1 };
+
+                if (i == cursor_position_)
+                {
+                    color = { 0.5, 0.5, 0.5, 1 };
+                }
+
+                buttons_[i]->ChangeColor(color);
             }
         }
     }
@@ -70,7 +109,10 @@ class MenuLayer : public Layer
         GLWCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
         GLWCall(glClearColor(0.0, 0.0, 0.0, 1.0));
 
-        button_->OnRender();
+        for (auto button : buttons_)
+        {
+            button->OnRender();
+        }
     }
 
 };
