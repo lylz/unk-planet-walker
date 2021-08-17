@@ -41,7 +41,6 @@ Wall::Wall(WallType type, glm::vec2 position)
 
 Wall::~Wall()
 {
-	delete mesh_;
 	delete material_;
 }
 

@@ -34,7 +34,6 @@ Enemy::Enemy(glm::vec2 position)
 
 Enemy::~Enemy()
 {
-	delete mesh_;
 	delete material_;
 }
 

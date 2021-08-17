@@ -65,10 +65,10 @@ void Text::GenerateCharMesh(char c)
 
 	x_ += glyph.advance * char_scale;
 
-	meshes_.push_back(new Mesh({ v1, v2, v3, v4 }, { 0, 1, 2, 2, 3, 0 }, material_));
+	meshes_.push_back(Mesh({ v1, v2, v3, v4 }, { 0, 1, 2, 2, 3, 0 }, material_));
 }
 
-std::vector<Mesh *> Text::meshes()
+const std::vector<Mesh> &Text::meshes()
 {
 	return meshes_;
 }

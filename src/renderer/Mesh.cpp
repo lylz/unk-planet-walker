@@ -2,6 +2,10 @@
 
 #include "../utils/IdentifierManager.h"
 
+Mesh::Mesh()
+    : Mesh({}, {}, nullptr)
+{}
+
 Mesh::Mesh(
 	std::vector<Vertex> vertices,
 	std::vector<unsigned int> indices,

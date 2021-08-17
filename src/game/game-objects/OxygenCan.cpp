@@ -42,6 +42,5 @@ void OxygenCan::OnUpdate()
 
 OxygenCan::~OxygenCan()
 {
-	delete mesh_;
 	delete material_;
 }

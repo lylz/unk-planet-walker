@@ -26,7 +26,6 @@ Passage::Passage(PassageType type, glm::vec2 position)
 
 Passage::~Passage()
 {
-	delete mesh_;
 	delete material_;
 }
 

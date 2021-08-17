@@ -13,7 +13,6 @@ class Application
 {
 public:
 	Application(std::string name, int width, int height);
-	~Application();
 
 	void Run();
 	void AddLayer(Layer *layer);
@@ -25,10 +24,10 @@ private:
 	int width_;
 	int height_;
 
-	Window *window_;
+	Window window_;
 	std::vector<Layer*> layers_;
 
-    ApplicationSettings *application_settings_;
+    ApplicationSettings application_settings_;
 
 	void MainLoop();
 
@@ -36,6 +35,7 @@ protected:
 	void Init();
 	void Update(long double dt);
 	void Render();
+    virtual void OnUpdate(long double dt) = 0;
 
 	virtual void OnInit() = 0;
 };

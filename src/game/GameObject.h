@@ -15,10 +15,9 @@ public:
 	GameObject()
 	{
 		id_ = IdentifierManager::GetInstance().GetNewIdentifier();
-		mesh_ = nullptr;
 	}
 
-	inline Mesh *mesh() { return mesh_; };
+	inline Mesh *mesh() { return &mesh_; };
 
 	virtual void OnUpdate() = 0;
 
@@ -32,6 +31,6 @@ private:
 protected:
     RenderType render_type_;
 	std::string name_;
-	Mesh *mesh_;
+	Mesh mesh_;
     glm::vec2 position_;
 };

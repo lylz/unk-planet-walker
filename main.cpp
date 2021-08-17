@@ -7,21 +7,49 @@
 #include "src/game/GameLayer.h"
 #include "src/game/UILayer.h"
 #include "src/game/MenuLayer.h"
+#include "src/application/InputManager.h"
 
 class UnkPlanetWalkerApplication : public Application
 {
 public:
 	UnkPlanetWalkerApplication(std::string name, int width, int height)
-		: Application(name, width, height)
+		: Application(name, width, height),
+          game_layer(GameLayer(application_settings())),
+          ui_layer(UILayer(application_settings())),
+          menu_layer(MenuLayer(application_settings()))
 	{};
+
+private:
+    GameLayer game_layer;
+    UILayer ui_layer;
+    MenuLayer menu_layer;
 
 protected:
 	void OnInit()
 	{
-		AddLayer(new GameLayer(application_settings()));
-		AddLayer(new UILayer(application_settings()));
-        AddLayer(new MenuLayer(application_settings()));
+		AddLayer(&game_layer);
+		AddLayer(&ui_layer);
+        AddLayer(&menu_layer);
 	}
+
+    void OnUpdate(long double dt)
+    {
+        if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_ESCAPE))
+        {
+            if (menu_layer.visible())
+            {
+                game_layer.SetVisible(true);
+                ui_layer.SetVisible(true);
+                menu_layer.SetVisible(false);
+            }
+            else
+            {
+                game_layer.SetVisible(false);
+                ui_layer.SetVisible(false);
+                menu_layer.SetVisible(true);
+            }
+        }
+    }
 };
 
 int main()

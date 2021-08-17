@@ -7,6 +7,7 @@
 Button::Button(std::string text, glm::vec2 screen_position)
 {
     Font font = FontManager::GetInstance().Get("PixelFont");
+    // TODO: check if font is there
 
     // button creation
     glm::vec3 button_position = { screen_position.x, screen_position.y, 0 };
@@ -26,7 +27,7 @@ Button::Button(std::string text, glm::vec2 screen_position)
     button_mesh_ = MeshFactory::CreateRectangle(width_, height_, button_position, button_color, ui_button_material_);
 
     renderer_ = new Renderer();
-    renderer_->Submit(button_mesh_);
+    renderer_->Submit(&button_mesh_);
 
     // text creation
     glm::vec3 text_offset = {
@@ -44,7 +45,7 @@ Button::Button(std::string text, glm::vec2 screen_position)
 
     for (auto mesh: text_->meshes())
     {
-        batch_renderer_->Submit(mesh);
+        batch_renderer_->Submit(&mesh);
     }
 }
 
@@ -76,7 +77,6 @@ Button::~Button()
     delete renderer_;
     delete ui_material_;
     delete ui_button_material_;
-    delete button_mesh_;
     delete text_;
 }
 

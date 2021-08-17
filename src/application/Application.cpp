@@ -2,12 +2,12 @@
 #include "Timer.h"
 
 Application::Application(std::string name, int width, int height)
-	: name_(name), width_(width), height_(height)
+	: name_(name),
+      width_(width),
+      height_(height),
+      application_settings_(ApplicationSettings(width, height)),
+      window_(Window(name_.c_str(), width_, height_))
 {
-	window_ = new Window(name_.c_str(), width_, height_);
-
-    application_settings_ = new ApplicationSettings(width_, height_);
-
 	GLenum err = glewInit();
 
 	if (err != GLEW_OK)
@@ -15,11 +15,6 @@ Application::Application(std::string name, int width, int height)
 		printf("ERROR: unable to initialize glew. \n");
 		exit(EXIT_FAILURE);
 	}
-}
-
-Application::~Application()
-{
-	delete window_;
 }
 
 void Application::Run()
@@ -48,7 +43,7 @@ void Application::RemoveLayer(Layer *layer)
 
 ApplicationSettings *Application::application_settings()
 {
-    return application_settings_;
+    return &application_settings_;
 }
 
 void Application::MainLoop()
@@ -65,9 +60,9 @@ void Application::MainLoop()
 	long double update_time = timer.GetElapsedTime();
 	long double tick_timer = 0;
 
-	while (!window_->ShouldClose())
+	while (!window_.ShouldClose())
 	{
-		window_->Update();
+		window_.Update();
 
 		long double update_delta_time = timer.GetElapsedTime() - update_time;
 
@@ -81,7 +76,7 @@ void Application::MainLoop()
 
 		Timer frame_timer;
 		Render();
-		window_->SwapBuffers();
+		window_.SwapBuffers();
 		frames++;
 		//printf("Frame Time: %.4f ms. UPS: %d, FPS: %d\n", frame_timer.GetElapsedTime(), ups, fps);
 
@@ -107,6 +102,8 @@ void Application::Init()
 
 void Application::Update(long double dt)
 {
+    OnUpdate(dt);
+
 	for (size_t i = 0; i < layers_.size(); i++)
 	{
 		layers_[i]->OnUpdate();

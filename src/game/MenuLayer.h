@@ -60,11 +60,6 @@ class MenuLayer : public Layer
 
     void OnUpdate()
     {
-        if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_ESCAPE))
-        {
-            SetVisible(!visible());
-        }
-
         if (visible())
         {
             if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_W))

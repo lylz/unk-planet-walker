@@ -20,6 +20,9 @@ private:
 
 	PlayerStats last_player_stats_;
 
+    Text *title_text_;
+    Text *player_stats_text_;
+
 public:
     UILayer(ApplicationSettings *application_settings)
         : Layer(application_settings) {};
@@ -41,6 +44,8 @@ public:
 
 		material_ = new UIMaterial(shader);
 		renderer_ = new BatchRenderer(material_);
+
+        title_text_ = new Text("UnkPlanetWalker v0.1.0", font, { 20, 20 });
 	}
 
 	void OnUpdate()
@@ -60,19 +65,25 @@ public:
 		{
 			std::string stats = "HP: " + std::to_string(player_stats->hp) + " | O2: " + std::to_string(player_stats->oxygen);
 			Font font = FontManager::GetInstance().Get("PixelFont");
-            Text title = Text("UnkPlanetWalker v0.1.0", font, { 20, 20 });
-			Text text = Text(stats, font, { 20, 680 });
+
+            if (player_stats_text_ != nullptr)
+            {
+                renderer_->Flush();
+                delete player_stats_text_;
+            }
             
+            player_stats_text_ = new Text(stats, font, { 20, 680 });
+
             renderer_->Flush();
 
-            for (auto mesh : title.meshes())
+            for (auto mesh : title_text_->meshes())
             {
-                renderer_->Submit(mesh);
+                renderer_->Submit(&mesh);
             }
 
-			for (auto mesh : text.meshes())
+			for (auto mesh : player_stats_text_->meshes())
 			{
-				renderer_->Submit(mesh);
+				renderer_->Submit(&mesh);
 			}
 
 			last_player_stats_ = *player_stats;

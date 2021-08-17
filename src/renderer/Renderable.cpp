@@ -1,5 +1,10 @@
 #include "Renderable.h"
 
+Renderable::Renderable()
+    : Renderable(nullptr)
+{};
+
+// TODO: rethink the way I use Mesh in Renderable, currently missing assertion on mesh_ != nullptr
 Renderable::Renderable(Mesh *mesh)
 	: mesh_(mesh)
 {

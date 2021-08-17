@@ -1,21 +1,21 @@
 #include "MeshFactory.h"
 
-Mesh *MeshFactory::CreateQuad(glm::vec2 size, Material *material)
+Mesh MeshFactory::CreateQuad(glm::vec2 size, Material *material)
 {
 	return CreateQuad(size, { 0, 0, 0 }, material);
 }
 
-Mesh *MeshFactory::CreateQuad(glm::vec2 size, glm::vec3 position, Material *material)
+Mesh MeshFactory::CreateQuad(glm::vec2 size, glm::vec3 position, Material *material)
 {
 	return CreateQuad(size, { 0, 0, 1, 1 }, position, material);
 }
 
-Mesh *MeshFactory::CreateQuad(glm::vec2 size, glm::vec4 uv, glm::vec3 position, Material *material)
+Mesh MeshFactory::CreateQuad(glm::vec2 size, glm::vec4 uv, glm::vec3 position, Material *material)
 {
     return CreateQuad(size, { 255, 255, 255, 1 }, uv, position, material); 
 }
 
-Mesh *MeshFactory::CreateQuad(glm::vec2 size, glm::vec4 color, glm::vec4 uv, glm::vec3 position, Material *material)
+Mesh MeshFactory::CreateQuad(glm::vec2 size, glm::vec4 color, glm::vec4 uv, glm::vec3 position, Material *material)
 {
 	Vertex v1, v2, v3, v4;
 
@@ -42,15 +42,15 @@ Mesh *MeshFactory::CreateQuad(glm::vec2 size, glm::vec4 color, glm::vec4 uv, glm
 
 	std::vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
 
-	return new Mesh({ v1, v2, v3, v4 }, indices, material);
+	return Mesh({ v1, v2, v3, v4 }, indices, material);
 }
 
-Mesh *MeshFactory::CreateRectangle(unsigned int width, unsigned int height, glm::vec3 position, glm::vec4 color, Material *material)
+Mesh MeshFactory::CreateRectangle(unsigned int width, unsigned int height, glm::vec3 position, glm::vec4 color, Material *material)
 {
     return CreateQuad({ width, height }, color, { 0, 0, 0, 0 }, position, material);
 }
 
-Mesh *MeshFactory::CreateCube(unsigned int edge_size, glm::vec3 position, Material *material)
+Mesh MeshFactory::CreateCube(unsigned int edge_size, glm::vec3 position, Material *material)
 {
 	Vertex v1, v2, v3, v4, v5, v6, v7, v8;
 
@@ -91,5 +91,5 @@ Mesh *MeshFactory::CreateCube(unsigned int edge_size, glm::vec3 position, Materi
 		6, 2, 1, 1, 5, 6 // top face
 	};
 
-	return new Mesh({ v1, v2, v3, v4, v5, v6, v7, v8 }, indices, material);
+	return Mesh({ v1, v2, v3, v4, v5, v6, v7, v8 }, indices, material);
 }

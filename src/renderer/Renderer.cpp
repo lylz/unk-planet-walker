@@ -14,7 +14,7 @@ Renderer::~Renderer()
 
 void Renderer::Submit(Mesh *mesh)
 {
-	Renderable *renderable = new Renderable(mesh);
+	Renderable renderable = Renderable(mesh);
 	renderables_.push_back(renderable);
 }
 
@@ -22,11 +22,10 @@ void Renderer::RemoveMeshById(unsigned int id)
 {
     for (unsigned int i = 0; i < renderables_.size(); i++)
     {
-        Renderable *renderable = renderables_[i];
+        Renderable *renderable = &renderables_[i];
 
         if (renderable->mesh()->id() == id)
         {
-            delete renderable;
             renderables_.erase(renderables_.begin() + i);
             break;
         }
@@ -35,11 +34,6 @@ void Renderer::RemoveMeshById(unsigned int id)
 
 void Renderer::Flush()
 {
-    for (unsigned int i = 0; i < renderables_.size(); i++)
-    {
-        delete renderables_[i];
-    }
-
 	renderables_.clear();
 }
 
@@ -54,9 +48,9 @@ void Renderer::Render()
 {
 	assert(default_shader_ != nullptr);
 
-	for (Renderable *renderable_object : renderables_)
+	for (Renderable &renderable_object : renderables_)
 	{
-		Material *material = renderable_object->mesh()->material();
+		Material *material = renderable_object.mesh()->material();
 
 		if (material != nullptr)
 		{
@@ -67,8 +61,8 @@ void Renderer::Render()
 			default_shader_->Use();
 		}
 
-		renderable_object->Prepare();
-		renderable_object->Draw();
+		renderable_object.Prepare();
+		renderable_object.Draw();
 
 		if (material != nullptr)
 		{

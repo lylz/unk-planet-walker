@@ -24,7 +24,7 @@ class Button
 
     glm::vec2 screen_position_;
     Text *text_;
-    Mesh *button_mesh_;
+    Mesh button_mesh_;
 
     unsigned int width_;
     unsigned int height_;

@@ -7,6 +7,7 @@
 class Renderable
 {
 public:
+    Renderable();
 	Renderable(Mesh *mesh);
 
 	void Prepare();

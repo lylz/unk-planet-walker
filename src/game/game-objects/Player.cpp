@@ -41,7 +41,6 @@ Player::Player(glm::vec2 position)
 
 Player::~Player()
 {
-	delete mesh_;
 	delete material_;
 }
 

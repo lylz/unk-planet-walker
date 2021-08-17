@@ -19,6 +19,6 @@ public:
 
 private:
 	Shader *default_shader_;
-	std::vector<Renderable*> renderables_;
+	std::vector<Renderable> renderables_;
 };
 

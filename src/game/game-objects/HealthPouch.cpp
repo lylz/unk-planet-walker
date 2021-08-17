@@ -42,6 +42,5 @@ void HealthPouch::OnUpdate()
 
 HealthPouch::~HealthPouch()
 {
-	delete mesh_;
 	delete material_;
 }
