@@ -60,7 +60,7 @@ void Application::MainLoop()
 	long double update_time = timer.GetElapsedTime();
 	long double tick_timer = 0;
 
-	while (!window_.ShouldClose())
+	while (!window_.ShouldClose() && !application_settings_.should_close)
 	{
 		window_.Update();
 

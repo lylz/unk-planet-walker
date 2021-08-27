@@ -35,8 +35,8 @@ protected:
 	void Init();
 	void Update(long double dt);
 	void Render();
-    virtual void OnUpdate(long double dt) = 0;
 
+    virtual void OnUpdate(long double dt) = 0;
 	virtual void OnInit() = 0;
 };
 

@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include "LevelConfig.h"
 #include "GameObject.h"
 #include "game-objects/Enemy.h"
 #include "game-objects/HealthPouch.h"
@@ -14,11 +15,11 @@
 class Level
 {
 public:
-	Level(unsigned int size);
+	Level(LevelConfig level_config);
 	~Level();
 
     unsigned int map_size();
-	std::vector<GameObject *> game_objects();
+	const std::vector<GameObject *> &game_objects();
 
 	glm::vec2 GetGameObjectPositionById(unsigned int id);
     std::vector<GameObject *> GetGameObjectsAtPosition(glm::vec2 position);

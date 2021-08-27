@@ -1,0 +1,73 @@
+{
+    "size": 10,
+    "objects": [
+        {
+            "type": "ENTRANCE",
+            "position": [1, 1]
+        },
+        {
+            "type": "PLAYER",
+            "position": [1, 1]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [1, 6]
+        },
+        {
+            "type": "ENEMY",
+            "position": [2, 3]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [2, 6]
+        },
+        {
+            "type": "OXYGEN_CAN",
+            "position": [3, 7]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [3, 8]
+        },
+        {
+            "type": "OXYGEN_CAN",
+            "position": [4, 3]
+        },
+        {
+            "type": "ENEMY",
+            "position": [5, 5]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [5, 7]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [6, 1]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [6, 2]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [6, 3]
+        },
+        {
+            "type": "OBSTACLE",
+            "position": [6, 7]
+        },
+        {
+            "type": "HEALTH_POUCH",
+            "position": [7, 4]
+        },
+        {
+            "type": "ENEMY",
+            "position": [8, 6]
+        },
+        {
+            "type": "EXIT",
+            "position": [8, 8]
+        }
+    ]
+}

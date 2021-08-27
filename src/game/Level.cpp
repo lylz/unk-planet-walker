@@ -1,19 +1,46 @@
 #include "Level.h"
 #include "../utils/Randomizer.h"
 
-Level::Level(unsigned int size)
+Level::Level(LevelConfig level_config)
 {
-	map_size_ = size;
+	map_size_ = level_config.size;
 
     // NOTE: should place Consumables first in order for them to be rendered first
     // so that Player will be displayed on top of them.
     // Maybe add some texture order sort mechanicsm in the future.
-	PlaceConsumables();
-	PlacePlayer();
-	PlaceEnemy();
+    for (auto level_object : level_config.objects)
+    {
+        GameObject *game_object;
+
+        switch (level_object.type)
+        {
+        case LevelObjectType::ENTRANCE:
+            game_object = new Passage(PassageType::ENTRANCE, level_object.position);
+            break;
+        case LevelObjectType::EXIT:
+            game_object = new Passage(PassageType::EXIT, level_object.position);
+            break;
+        case LevelObjectType::PLAYER:
+            game_object = new Player(level_object.position);
+            break;
+        case LevelObjectType::ENEMY:
+            game_object = new Enemy(level_object.position);
+            break;
+        case LevelObjectType::OBSTACLE:
+            game_object = new Wall(WallType::TOPDOWN, level_object.position);
+            break;
+        case LevelObjectType::HEALTH_POUCH:
+            game_object = new HealthPouch(level_object.position);
+            break;
+        case LevelObjectType::OXYGEN_CAN:
+            game_object = new OxygenCan(level_object.position);
+            break;
+        }
+
+        game_objects_.push_back(game_object);
+    }
+
 	PlaceWalls();
-	PlaceObstacles();
-	PlacePassages();
 }
 
 Level::~Level()
@@ -26,7 +53,7 @@ Level::~Level()
     game_objects_.clear();
 }
 
-std::vector<GameObject *> Level::game_objects()
+const std::vector<GameObject *> &Level::game_objects()
 {
     return game_objects_;
 }
@@ -40,12 +67,14 @@ void Level::SetGameObjectsBeforeDestroyCallback(void *context, void (*callback) 
 void Level::DestroyGameObjectById(unsigned int id)
 {
     GameObject *game_object = nullptr;
-
+    int game_object_index = -1;
+    
     for (unsigned int i = 0; i < game_objects_.size(); i++)
     {
         if (game_objects_[i]->id() == id)
         {
             game_object = game_objects_[i];
+            game_object_index = i;
             break;
         }
     }
@@ -64,14 +93,7 @@ void Level::DestroyGameObjectById(unsigned int id)
         );
     }
 
-    for (unsigned int i = 0; i < game_objects_.size(); i++)
-    {
-        if (game_objects_[i]->id() == game_object->id())
-        {
-            game_objects_.erase(game_objects_.begin() + i);
-        }
-    }
-
+    game_objects_.erase(game_objects_.begin() + game_object_index);
     delete game_object;
 }
 
@@ -105,27 +127,8 @@ GameObject *Level::GetGameObjectByName(const std::string &name)
             return game_object;
         }
     }
-}
 
-void Level::PlaceObstacles()
-{
-	Wall *obstacle = new Wall(WallType::TOPDOWN, { 7, 7 });
-
-    game_objects_.push_back(obstacle);
-}
-
-void Level::PlacePlayer()
-{
-	Player *player = new Player({ 1, 1 });
-
-    game_objects_.push_back(player);
-}
-
-void Level::PlaceEnemy()
-{
-	Enemy *enemy = new Enemy({ 4, 4 });
-
-    game_objects_.push_back(enemy);
+    return nullptr;
 }
 
 void Level::PlaceWalls()
@@ -155,24 +158,5 @@ void Level::PlaceWalls()
 			}
 		}
 	}
-}
-
-void Level::PlacePassages()
-{
-	Passage *entrance = new Passage(PassageType::ENTRANCE, { 1, 1 });
-	Passage *exit = new Passage(PassageType::EXIT, { map_size_ - 2, map_size_ - 2 });
-
-    // NOTE: we don't need an entrance on the map, because it is not used in game logic at all
-    game_objects_.push_back(exit);
-    game_objects_.push_back(entrance);
-}
-
-void Level::PlaceConsumables()
-{
-	HealthPouch *health_pouch = new HealthPouch({ 2, 2 });
-	OxygenCan *oxygen_can = new OxygenCan({ 5, 5 });
-
-    game_objects_.push_back(health_pouch);
-    game_objects_.push_back(oxygen_can);
 }
 

@@ -20,5 +20,6 @@ private:
 private:
 	void Update();
 	void Move(glm::vec2 step);
+    void Attack();
 };
 

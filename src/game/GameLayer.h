@@ -62,6 +62,11 @@ public:
         TextureManager::GetInstance().Add(new Texture("OxygenCan", "assets/OxygenCan.png"));
         TextureManager::GetInstance().Add(new Texture("HealthPouch", "assets/HealthPouch.png"));
 
+        StartLevel();
+	}
+
+    void StartLevel()
+    {
 		GameManager::GetInstance().GenerateLevel();
 		Level *level = GameManager::GetInstance().level();
 		assert(level != nullptr);
@@ -88,7 +93,7 @@ public:
                 break;
             }
 		}
-	}
+    }
 
     static void GameObjectsBeforeDestroyCallbackStatic(void *context, GameObject *game_object)
     {
@@ -111,7 +116,7 @@ public:
 		Level *level = GameManager::GetInstance().level();
 		for (auto game_object : level->game_objects())
 		{
-			game_object->OnUpdate();
+            game_object->OnUpdate();
 		}
 	}
 

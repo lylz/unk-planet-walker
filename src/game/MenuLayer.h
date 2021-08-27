@@ -10,15 +10,28 @@
 #include "../renderer/ui/Button.h"
 #include "../utils/GLIncludes.h"
 
+#include "GameLayer.h"
+#include "UILayer.h"
+#include "GameManager.h"
+
 class MenuLayer : public Layer
 {
  private:
     std::vector<Button *> buttons_;
     unsigned int cursor_position_ = 0;
 
+    GameLayer &game_layer_;
+    UILayer &ui_layer_;
+
  public:
-    MenuLayer(ApplicationSettings *application_settings)
-        : Layer(application_settings) {};
+    MenuLayer(
+        ApplicationSettings *application_settings,
+        GameLayer &game_layer,
+        UILayer &ui_layer
+    )
+        : Layer(application_settings),
+          game_layer_(game_layer),
+          ui_layer_(ui_layer) {};
 
     ~MenuLayer()
     {
@@ -96,6 +109,23 @@ class MenuLayer : public Layer
 
                 buttons_[i]->ChangeColor(color);
             }
+
+            if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_ENTER))
+            {
+                switch (cursor_position_)
+                {
+                case 0: // restart level
+                    game_layer_.StartLevel();
+                    GameManager::GetInstance().ResetPlayerStats();
+                    game_layer_.SetVisible(true);
+                    ui_layer_.SetVisible(true);
+                    SetVisible(false);
+                    break;
+                case 1: // quit
+                    application_settings_->should_close = true;
+                    break;
+                }
+            }
         }
     }
 
@@ -109,5 +139,4 @@ class MenuLayer : public Layer
             button->OnRender();
         }
     }
-
 };

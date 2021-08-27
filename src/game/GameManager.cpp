@@ -1,5 +1,7 @@
 #include "GameManager.h"
 
+#include "LevelLoader.h"
+
 GameManager &GameManager::GetInstance()
 {
 	static GameManager instance;
@@ -12,13 +14,18 @@ GameManager::GameManager()
 	level_ = nullptr;
 
 	player_stats_ = new PlayerStats();
-	player_stats_->hp = 300;
-	player_stats_->oxygen = 300;
+    ResetPlayerStats();
 }
 
 GameManager::~GameManager()
 {
 	delete level_;
+}
+
+void GameManager::ResetPlayerStats()
+{
+	player_stats_->hp = 300;
+	player_stats_->oxygen = 300;
 }
 
 void GameManager::GenerateLevel()
@@ -28,7 +35,9 @@ void GameManager::GenerateLevel()
 		delete level_;
 	}
 
-	level_ = new Level(10);
+    LevelConfig level_config = LevelLoader::Load("assets/levels/level1.json");
+
+	level_ = new Level(level_config);
 }
 
 void GameManager::ConsumeHealthPouch()
@@ -41,7 +50,7 @@ void GameManager::ConsumeOxygenCan()
     player_stats_->oxygen += OXYGEN_CAN_POINTS;
 }
 
-void GameManager::DescreasePlayerStats()
+void GameManager::DecreasePlayerStats()
 {
 	if (player_stats_->oxygen > 0)
 	{

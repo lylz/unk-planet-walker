@@ -19,10 +19,11 @@ public:
 	GameManager(const GameManager &) = delete;
 	void operator=(const GameManager &) = delete;
 
+    void ResetPlayerStats();
 	void GenerateLevel();
     void ConsumeHealthPouch();
     void ConsumeOxygenCan();
-	void DescreasePlayerStats();
+	void DecreasePlayerStats();
 
 	PlayerStats *player_stats();
 	Level *level();
@@ -37,5 +38,6 @@ private:
 
 	Level *level_;
 	PlayerStats *player_stats_;
+    bool game_over_;
 };
 

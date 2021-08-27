@@ -111,6 +111,9 @@
     <ClCompile Include="src\renderer\materials\default\UIButtonMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\LevelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderer\Renderer.h">
@@ -251,6 +254,12 @@
     <ClInclude Include="src\renderer\materials\default\UIButtonMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\LevelConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\LevelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\fonts\.font_atlas.png">
@@ -292,6 +301,12 @@
     <Image Include="assets\MapAtlas.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\HealthPouch.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\OxygenCan.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\m6x11.ttf" />
@@ -300,5 +315,6 @@
     <None Include=".gitignore" />
     <None Include="LICENSE" />
     <None Include="assets\MapAtlas.json" />
+    <None Include="assets\levels\level1.json" />
   </ItemGroup>
 </Project>

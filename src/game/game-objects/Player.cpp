@@ -85,7 +85,32 @@ void Player::Update()
 	else if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_D))
 	{
 		Move({ 1, 0 });
-	}
+	} else if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_ENTER))
+    {
+        Attack();
+    }
+}
+
+void Player::Attack()
+{
+    Level *level = GameManager::GetInstance().level();
+    assert(level != nullptr);
+
+    glm::vec2 attack_point = position_ + glm::vec2(1, 0);
+    std::vector<GameObject *> game_objects = level->GetGameObjectsAtPosition(attack_point);
+
+    for (auto game_object: game_objects)
+    {
+        assert(game_object != nullptr);
+
+        if (game_object->name() == "Enemy")
+        {
+            level->DestroyGameObjectById(game_object->id());
+            break;
+        }
+    }
+
+    GameManager::GetInstance().DecreasePlayerStats();
 }
 
 void Player::Move(glm::vec2 step)
@@ -112,8 +137,7 @@ void Player::Move(glm::vec2 step)
     if (can_move)
     {
         position_ = desirable_position;
-        GameManager::GetInstance().DescreasePlayerStats();
-
+        GameManager::GetInstance().DecreasePlayerStats();
 
         for (auto game_object : game_objects)
         {

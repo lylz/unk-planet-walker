@@ -154,6 +154,7 @@
     <ClCompile Include="src\game\game-objects\Player.cpp" />
     <ClCompile Include="src\game\game-objects\Wall.cpp" />
     <ClCompile Include="src\game\Level.cpp" />
+    <ClCompile Include="src\game\LevelLoader.cpp" />
     <ClCompile Include="src\game\Utils.cpp" />
     <ClCompile Include="src\renderer\font\FontManager.cpp" />
     <ClCompile Include="src\renderer\materials\default\UIButtonMaterial.cpp" />
@@ -191,6 +192,8 @@
     <ClInclude Include="src\game\game-objects\Wall.h" />
     <ClInclude Include="src\game\GameObject.h" />
     <ClInclude Include="src\game\Level.h" />
+    <ClInclude Include="src\game\LevelConfig.h" />
+    <ClInclude Include="src\game\LevelLoader.h" />
     <ClInclude Include="src\game\MenuLayer.h" />
     <ClInclude Include="src\game\Utils.h" />
     <ClInclude Include="src\renderer\font\FontManager.h" />
@@ -232,7 +235,9 @@
     <Image Include="assets\Enemy.png" />
     <Image Include="assets\fonts\.font_atlas.png" />
     <Image Include="assets\Guard.png" />
+    <Image Include="assets\HealthPouch.png" />
     <Image Include="assets\MapAtlas.png" />
+    <Image Include="assets\OxygenCan.png" />
     <Image Include="assets\PlanetWalker.png" />
     <Image Include="assets\Plant.png" />
     <Image Include="assets\Protagonist.png" />
@@ -247,6 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="assets\levels\level1.json" />
     <None Include="assets\MapAtlas.json" />
     <None Include="LICENSE" />
   </ItemGroup>

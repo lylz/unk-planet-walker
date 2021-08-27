@@ -16,7 +16,7 @@ public:
 		: Application(name, width, height),
           game_layer(GameLayer(application_settings())),
           ui_layer(UILayer(application_settings())),
-          menu_layer(MenuLayer(application_settings()))
+          menu_layer(MenuLayer(application_settings(), game_layer, ui_layer))
 	{};
 
 private:
@@ -32,23 +32,45 @@ protected:
         AddLayer(&menu_layer);
 	}
 
+    void ShowMenu()
+    {
+        game_layer.SetVisible(false);
+        ui_layer.SetVisible(false);
+        menu_layer.SetVisible(true);
+    }
+
+    void ShowGame()
+    {
+        game_layer.SetVisible(true);
+        ui_layer.SetVisible(true);
+        menu_layer.SetVisible(false);
+    }
+
+    void CheckIfGameIsOver()
+    {
+        PlayerStats *player_stats = GameManager::GetInstance().player_stats();
+
+        if (player_stats->hp <= 0)
+        {
+            ShowMenu();
+        }
+    }
+
     void OnUpdate(long double dt)
     {
         if (InputManager::GetInstance().GetKeyDown(GLFW_KEY_ESCAPE))
         {
             if (menu_layer.visible())
             {
-                game_layer.SetVisible(true);
-                ui_layer.SetVisible(true);
-                menu_layer.SetVisible(false);
+                ShowGame();
             }
             else
             {
-                game_layer.SetVisible(false);
-                ui_layer.SetVisible(false);
-                menu_layer.SetVisible(true);
+                ShowMenu();
             }
         }
+
+        CheckIfGameIsOver();
     }
 };
 

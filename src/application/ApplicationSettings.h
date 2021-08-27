@@ -7,5 +7,7 @@ struct ApplicationSettings
 
     unsigned int width;
     unsigned int height;
+
+    bool should_close;
 };
 
